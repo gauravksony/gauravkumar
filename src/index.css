@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -96,6 +99,51 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-inter;
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .hero-heading {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold text-portfolio-lightestSlate;
+  }
+  
+  .section-heading {
+    @apply text-2xl md:text-3xl font-bold mb-6 text-portfolio-lightestSlate relative pb-2 inline-block;
+  }
+  
+  .section-heading::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-2/3 h-0.5 bg-portfolio-cyan;
+  }
+  
+  .btn-primary {
+    @apply px-6 py-2 rounded-md bg-transparent text-portfolio-cyan border border-portfolio-cyan hover:bg-portfolio-cyan/10 transition-all duration-300 font-medium;
+  }
+  
+  .btn-secondary {
+    @apply px-6 py-2 rounded-md bg-portfolio-cyan text-portfolio-navy border border-portfolio-cyan hover:bg-portfolio-cyan/90 transition-all duration-300 font-medium;
+  }
+  
+  .nav-link {
+    @apply text-portfolio-lightSlate hover:text-portfolio-cyan transition-colors duration-200 px-2 py-1 relative;
+  }
+  
+  .nav-link::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-0.5 bg-portfolio-cyan transition-all duration-300;
+  }
+  
+  .nav-link:hover::after {
+    @apply w-full;
+  }
+  
+  .card {
+    @apply bg-portfolio-lightNavy rounded-lg p-5 transition-all duration-300 border border-transparent hover:border-portfolio-cyan/30;
+  }
+  
+  .tag {
+    @apply px-3 py-1 rounded-full text-xs bg-portfolio-lightestNavy text-portfolio-lightSlate inline-block mr-2 mb-2;
   }
 }

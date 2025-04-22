@@ -9,7 +9,75 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      blogs: {
+        Row: {
+          content: string | null
+          created_at: string
+          excerpt: string | null
+          featured_image_url: string | null
+          id: string
+          slug: string
+          tags: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string
+          excerpt?: string | null
+          featured_image_url?: string | null
+          id?: string
+          slug: string
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          content?: string | null
+          created_at?: string
+          excerpt?: string | null
+          featured_image_url?: string | null
+          id?: string
+          slug?: string
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      study_materials: {
+        Row: {
+          category: Database["public"]["Enums"]["study_material_category"]
+          description: string | null
+          file_url: string | null
+          id: string
+          thumbnail_url: string | null
+          title: string
+          updated_at: string
+          upload_date: string
+        }
+        Insert: {
+          category: Database["public"]["Enums"]["study_material_category"]
+          description?: string | null
+          file_url?: string | null
+          id?: string
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string
+          upload_date?: string
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["study_material_category"]
+          description?: string | null
+          file_url?: string | null
+          id?: string
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string
+          upload_date?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -18,7 +86,17 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      study_material_category:
+        | "Programming"
+        | "DSA"
+        | "DBMS"
+        | "OS"
+        | "Networking"
+        | "Web Development"
+        | "Mobile Development"
+        | "Machine Learning"
+        | "Interview Prep"
+        | "Other"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -133,6 +211,19 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      study_material_category: [
+        "Programming",
+        "DSA",
+        "DBMS",
+        "OS",
+        "Networking",
+        "Web Development",
+        "Mobile Development",
+        "Machine Learning",
+        "Interview Prep",
+        "Other",
+      ],
+    },
   },
 } as const

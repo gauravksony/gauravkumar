@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
+import { Image } from 'lucide-react';
 
 interface BlogFormProps {
   blog?: any;
@@ -17,6 +18,7 @@ const BlogForm = ({ blog, onClose }: BlogFormProps) => {
   const [slug, setSlug] = useState('');
   const [content, setContent] = useState('');
   const [featuredImage, setFeaturedImage] = useState<File | null>(null);
+  const [featuredImagePreview, setFeaturedImagePreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -24,8 +26,20 @@ const BlogForm = ({ blog, onClose }: BlogFormProps) => {
       setTitle(blog.title);
       setSlug(blog.slug);
       setContent(blog.content || '');
+      if (blog.featured_image_url) {
+        setFeaturedImagePreview(blog.featured_image_url);
+      }
     }
   }, [blog]);
+
+  const handleFeaturedImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setFeaturedImage(file);
+      const previewUrl = URL.createObjectURL(file);
+      setFeaturedImagePreview(previewUrl);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -91,6 +105,7 @@ const BlogForm = ({ blog, onClose }: BlogFormProps) => {
           required
         />
       </div>
+      
       <div className="space-y-2">
         <Label htmlFor="slug">Slug</Label>
         <Input
@@ -100,6 +115,7 @@ const BlogForm = ({ blog, onClose }: BlogFormProps) => {
           required
         />
       </div>
+      
       <div className="space-y-2">
         <Label htmlFor="content">Content</Label>
         <Textarea
@@ -110,15 +126,33 @@ const BlogForm = ({ blog, onClose }: BlogFormProps) => {
           required
         />
       </div>
+      
       <div className="space-y-2">
         <Label htmlFor="image">Featured Image</Label>
         <Input
           id="image"
           type="file"
           accept="image/*"
-          onChange={(e) => setFeaturedImage(e.target.files?.[0] || null)}
+          onChange={handleFeaturedImageChange}
         />
+        
+        {featuredImagePreview && (
+          <div className="mt-2 relative w-64 h-40">
+            <img
+              src={featuredImagePreview}
+              alt="Featured image preview"
+              className="w-full h-full object-cover rounded-md"
+            />
+          </div>
+        )}
+        
+        {!featuredImagePreview && (
+          <div className="mt-2 w-64 h-40 border-2 border-dashed border-gray-300 rounded-md flex items-center justify-center">
+            <Image className="w-8 h-8 text-gray-400" />
+          </div>
+        )}
       </div>
+      
       <div className="flex justify-end space-x-2">
         <Button type="button" variant="outline" onClick={onClose}>
           Cancel
@@ -132,3 +166,4 @@ const BlogForm = ({ blog, onClose }: BlogFormProps) => {
 };
 
 export default BlogForm;
+

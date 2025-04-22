@@ -13,13 +13,16 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { toast } from 'sonner';
+import { Database } from '@/integrations/supabase/types';
+
+type StudyMaterialCategory = Database['public']['Enums']['study_material_category'];
 
 interface StudyMaterialFormProps {
   material?: any;
   onClose: () => void;
 }
 
-const categories = [
+const categories: StudyMaterialCategory[] = [
   'Programming',
   'DSA',
   'DBMS',
@@ -35,7 +38,7 @@ const categories = [
 const StudyMaterialForm = ({ material, onClose }: StudyMaterialFormProps) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState<StudyMaterialCategory>('Programming');
   const [file, setFile] = useState<File | null>(null);
   const [thumbnail, setThumbnail] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
@@ -44,7 +47,7 @@ const StudyMaterialForm = ({ material, onClose }: StudyMaterialFormProps) => {
     if (material) {
       setTitle(material.title);
       setDescription(material.description || '');
-      setCategory(material.category);
+      setCategory(material.category as StudyMaterialCategory);
     }
   }, [material]);
 
@@ -134,7 +137,7 @@ const StudyMaterialForm = ({ material, onClose }: StudyMaterialFormProps) => {
         <Label htmlFor="category">Category</Label>
         <Select
           value={category}
-          onValueChange={setCategory}
+          onValueChange={(value: StudyMaterialCategory) => setCategory(value)}
           required
         >
           <SelectTrigger>

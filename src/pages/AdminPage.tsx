@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import AdminBlogList from '@/components/admin/AdminBlogList';
 import AdminStudyMaterials from '@/components/admin/AdminStudyMaterials';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { toast } from 'sonner';
 
 const AdminPage = () => {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const AdminPage = () => {
       setLoading(false);
     } catch (error) {
       console.error('Error:', error);
+      toast.error('Authentication error. Please try again.');
       navigate('/auth');
     }
   };
@@ -33,14 +35,16 @@ const AdminPage = () => {
   const handleLogout = async () => {
     try {
       await supabase.auth.signOut();
+      toast.success('Logged out successfully');
       navigate('/auth');
     } catch (error) {
       console.error('Error:', error);
+      toast.error('Failed to logout. Please try again.');
     }
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
   }
 
   return (

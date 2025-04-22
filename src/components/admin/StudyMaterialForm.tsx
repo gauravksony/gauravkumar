@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/select';
 import { toast } from 'sonner';
 import { Database } from '@/integrations/supabase/types';
+import { Image } from 'lucide-react';
 
 type StudyMaterialCategory = Database['public']['Enums']['study_material_category'];
 
@@ -41,6 +42,7 @@ const StudyMaterialForm = ({ material, onClose }: StudyMaterialFormProps) => {
   const [category, setCategory] = useState<StudyMaterialCategory>('Programming');
   const [file, setFile] = useState<File | null>(null);
   const [thumbnail, setThumbnail] = useState<File | null>(null);
+  const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -48,8 +50,20 @@ const StudyMaterialForm = ({ material, onClose }: StudyMaterialFormProps) => {
       setTitle(material.title);
       setDescription(material.description || '');
       setCategory(material.category as StudyMaterialCategory);
+      if (material.thumbnail_url) {
+        setThumbnailPreview(material.thumbnail_url);
+      }
     }
   }, [material]);
+
+  const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setThumbnail(file);
+      const previewUrl = URL.createObjectURL(file);
+      setThumbnailPreview(previewUrl);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -77,15 +91,15 @@ const StudyMaterialForm = ({ material, onClose }: StudyMaterialFormProps) => {
 
       if (thumbnail) {
         const fileExt = thumbnail.name.split('.').pop();
-        const fileName = `thumbnail_${Math.random()}.${fileExt}`;
+        const fileName = `${Math.random()}.${fileExt}`;
         const { error: uploadError } = await supabase.storage
-          .from('study_materials')
+          .from('study_material_thumbnails')
           .upload(fileName, thumbnail);
 
         if (uploadError) throw uploadError;
 
         const { data: { publicUrl } } = supabase.storage
-          .from('study_materials')
+          .from('study_material_thumbnails')
           .getPublicUrl(fileName);
 
         thumbnailUrl = publicUrl;
@@ -133,6 +147,7 @@ const StudyMaterialForm = ({ material, onClose }: StudyMaterialFormProps) => {
           required
         />
       </div>
+
       <div className="space-y-2">
         <Label htmlFor="category">Category</Label>
         <Select
@@ -152,6 +167,7 @@ const StudyMaterialForm = ({ material, onClose }: StudyMaterialFormProps) => {
           </SelectContent>
         </Select>
       </div>
+
       <div className="space-y-2">
         <Label htmlFor="description">Description</Label>
         <Textarea
@@ -161,6 +177,7 @@ const StudyMaterialForm = ({ material, onClose }: StudyMaterialFormProps) => {
           rows={5}
         />
       </div>
+
       <div className="space-y-2">
         <Label htmlFor="file">File</Label>
         <Input
@@ -169,15 +186,31 @@ const StudyMaterialForm = ({ material, onClose }: StudyMaterialFormProps) => {
           onChange={(e) => setFile(e.target.files?.[0] || null)}
         />
       </div>
+
       <div className="space-y-2">
-        <Label htmlFor="thumbnail">Thumbnail (Optional)</Label>
+        <Label htmlFor="thumbnail">Thumbnail Image</Label>
         <Input
           id="thumbnail"
           type="file"
           accept="image/*"
-          onChange={(e) => setThumbnail(e.target.files?.[0] || null)}
+          onChange={handleThumbnailChange}
         />
+        {thumbnailPreview && (
+          <div className="mt-2 relative w-32 h-32">
+            <img
+              src={thumbnailPreview}
+              alt="Thumbnail preview"
+              className="w-full h-full object-cover rounded-md"
+            />
+          </div>
+        )}
+        {!thumbnailPreview && (
+          <div className="mt-2 w-32 h-32 border-2 border-dashed border-gray-300 rounded-md flex items-center justify-center">
+            <Image className="w-8 h-8 text-gray-400" />
+          </div>
+        )}
       </div>
+
       <div className="flex justify-end space-x-2">
         <Button type="button" variant="outline" onClick={onClose}>
           Cancel
@@ -191,3 +224,4 @@ const StudyMaterialForm = ({ material, onClose }: StudyMaterialFormProps) => {
 };
 
 export default StudyMaterialForm;
+

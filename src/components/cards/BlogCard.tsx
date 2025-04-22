@@ -2,11 +2,11 @@
 import { Link } from 'react-router-dom';
 import { Calendar } from 'lucide-react';
 
-interface BlogCardProps {
+export interface BlogCardProps {
   id: string;
   title: string;
   excerpt: string;
-  date: string;
+  date?: string; // Changed from required to optional
   tags: string[];
   featuredImage?: string;
   readTime?: string;
@@ -36,10 +36,12 @@ const BlogCard: React.FC<BlogCardProps> = ({
       
       {/* Blog Meta */}
       <div className="flex items-center text-sm text-portfolio-slate mb-2">
-        <div className="flex items-center mr-4">
-          <Calendar size={14} className="mr-1" />
-          <span>{date}</span>
-        </div>
+        {date && (
+          <div className="flex items-center mr-4">
+            <Calendar size={14} className="mr-1" />
+            <span>{date}</span>
+          </div>
+        )}
         {readTime && (
           <div className="text-portfolio-slate">
             {readTime}

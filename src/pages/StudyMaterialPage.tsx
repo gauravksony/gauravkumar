@@ -1,13 +1,10 @@
 
 import { useState, useEffect } from 'react';
 import Layout from '@/components/common/Layout';
-import ResourceCard from '@/components/cards/ResourceCard';
+import ResourceCard, { ResourceType } from '@/components/cards/ResourceCard';
 import { Search, FileText, BookOpen, Youtube, Link as LinkIcon } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-
-// Define the allowed resource types
-type ResourceType = 'pdf' | 'video' | 'link';
 
 interface StudyMaterial {
   id: string;
@@ -17,7 +14,6 @@ interface StudyMaterial {
   category: string;
   date: string;
   url: string;
-  file_url?: string;
   upload_date: string;
 }
 
@@ -50,9 +46,9 @@ const StudyMaterialPage = () => {
         description: material.description || '',
         // Determine the type based on the file_url extension or default to 'link'
         type: material.file_url ? 
-          (material.file_url.endsWith('.pdf') ? 'pdf' : 
-          (material.file_url.includes('youtube') ? 'video' : 'link')) 
-          : 'link',
+          (material.file_url.endsWith('.pdf') ? 'pdf' as ResourceType : 
+          (material.file_url.includes('youtube') ? 'video' as ResourceType : 'link' as ResourceType)) 
+          : 'link' as ResourceType,
         category: material.category,
         date: new Date(material.upload_date).toLocaleDateString(),
         url: material.file_url || '#',

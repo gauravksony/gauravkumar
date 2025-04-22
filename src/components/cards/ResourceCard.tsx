@@ -1,10 +1,12 @@
 
 import { Download, FileText, ExternalLink, Calendar } from 'lucide-react';
 
-interface ResourceCardProps {
+export type ResourceType = 'pdf' | 'video' | 'link';
+
+export interface ResourceCardProps {
   title: string;
   description: string;
-  type: 'pdf' | 'video' | 'link';
+  type: ResourceType;
   category: string;
   date: string;
   url: string;

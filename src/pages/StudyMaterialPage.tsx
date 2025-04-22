@@ -1,25 +1,82 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Layout from '@/components/common/Layout';
 import ResourceCard from '@/components/cards/ResourceCard';
-import { studyMaterialsData } from '@/data/mockData';
 import { Search, FileText, BookOpen, Youtube, Link as LinkIcon } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 // Define the allowed resource types
 type ResourceType = 'pdf' | 'video' | 'link';
+
+interface StudyMaterial {
+  id: string;
+  title: string;
+  description: string;
+  type: ResourceType;
+  category: string;
+  date: string;
+  url: string;
+  file_url?: string;
+  upload_date: string;
+}
 
 const StudyMaterialPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<ResourceType | null>(null);
+  const [materials, setMaterials] = useState<StudyMaterial[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [allCategories, setAllCategories] = useState<string[]>([]);
   
-  // Get all unique categories
-  const allCategories = Array.from(
-    new Set(studyMaterialsData.map(material => material.category))
-  );
+  useEffect(() => {
+    fetchMaterials();
+  }, []);
+  
+  const fetchMaterials = async () => {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('study_materials')
+        .select('*')
+        .order('upload_date', { ascending: false });
+      
+      if (error) throw error;
+      
+      // Transform the data to match the ResourceCard component props
+      const formattedMaterials = data.map((material: any) => ({
+        id: material.id,
+        title: material.title,
+        description: material.description || '',
+        // Determine the type based on the file_url extension or default to 'link'
+        type: material.file_url ? 
+          (material.file_url.endsWith('.pdf') ? 'pdf' : 
+          (material.file_url.includes('youtube') ? 'video' : 'link')) 
+          : 'link',
+        category: material.category,
+        date: new Date(material.upload_date).toLocaleDateString(),
+        url: material.file_url || '#',
+        upload_date: material.upload_date
+      }));
+      
+      setMaterials(formattedMaterials);
+      
+      // Extract all unique categories
+      const categories = Array.from(
+        new Set(formattedMaterials.map(material => material.category))
+      );
+      setAllCategories(categories);
+      
+    } catch (error: any) {
+      console.error('Error fetching study materials:', error);
+      toast.error('Failed to load study materials');
+    } finally {
+      setLoading(false);
+    }
+  };
   
   // Filter materials based on search term, category, and type
-  const filteredMaterials = studyMaterialsData.filter(material => {
+  const filteredMaterials = materials.filter(material => {
     const matchesSearch = !searchTerm || 
       material.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       material.description.toLowerCase().includes(searchTerm.toLowerCase());
@@ -119,14 +176,18 @@ const StudyMaterialPage = () => {
           </div>
           
           {/* Materials Grid */}
-          {filteredMaterials.length > 0 ? (
+          {loading ? (
+            <div className="text-center py-12">
+              <h3 className="text-xl text-portfolio-lightestSlate mb-2">Loading study materials...</h3>
+            </div>
+          ) : filteredMaterials.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredMaterials.map(material => (
                 <ResourceCard 
-                  key={material.id} 
+                  key={material.id}
                   title={material.title}
                   description={material.description}
-                  type={material.type as 'pdf' | 'video' | 'link'}
+                  type={material.type}
                   category={material.category}
                   date={material.date}
                   url={material.url}

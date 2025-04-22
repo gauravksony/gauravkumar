@@ -1,22 +1,75 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '@/components/common/Layout';
 import BlogCard from '@/components/cards/BlogCard';
-import { blogsData } from '@/data/mockData';
 import { Search } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
+
+interface Blog {
+  id: string;
+  title: string;
+  excerpt: string;
+  date?: string;
+  tags: string[];
+  featuredImage?: string;
+  readTime?: string;
+  created_at: string;
+  featured_image_url?: string;
+}
 
 const BlogsPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [allTags, setAllTags] = useState<string[]>([]);
   
-  // Get all unique tags
-  const allTags = Array.from(
-    new Set(blogsData.flatMap(blog => blog.tags))
-  );
+  useEffect(() => {
+    fetchBlogs();
+  }, []);
+  
+  const fetchBlogs = async () => {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('blogs')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      
+      // Transform the data to match the BlogCard component props
+      const formattedBlogs = data.map((blog: any) => ({
+        id: blog.id,
+        title: blog.title,
+        excerpt: blog.excerpt || '',
+        date: new Date(blog.created_at).toLocaleDateString(),
+        tags: blog.tags || [],
+        featuredImage: blog.featured_image_url,
+        readTime: '5 min read', // Default read time
+        created_at: blog.created_at
+      }));
+      
+      setBlogs(formattedBlogs);
+      
+      // Extract all unique tags
+      const tags = Array.from(
+        new Set(formattedBlogs.flatMap(blog => blog.tags))
+      );
+      setAllTags(tags);
+      
+    } catch (error: any) {
+      console.error('Error fetching blogs:', error);
+      toast.error('Failed to load blogs');
+    } finally {
+      setLoading(false);
+    }
+  };
   
   // Filter blogs based on search term and selected tag
-  const filteredBlogs = blogsData.filter(blog => {
+  const filteredBlogs = blogs.filter(blog => {
     const matchesSearch = !searchTerm || 
       blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       blog.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
@@ -74,7 +127,11 @@ const BlogsPage = () => {
           </div>
           
           {/* Blog Grid */}
-          {filteredBlogs.length > 0 ? (
+          {loading ? (
+            <div className="text-center py-12">
+              <h3 className="text-xl text-portfolio-lightestSlate mb-2">Loading blogs...</h3>
+            </div>
+          ) : filteredBlogs.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredBlogs.map(blog => (
                 <BlogCard key={blog.id} {...blog} />

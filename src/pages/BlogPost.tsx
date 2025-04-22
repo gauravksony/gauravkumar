@@ -1,19 +1,87 @@
 
-import { useParams, Link } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import Layout from '@/components/common/Layout';
-import { blogsData } from '@/data/mockData';
 import { Calendar, Clock, ArrowLeft, Share2, Twitter, Facebook, Linkedin } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
-// You could add a markdown parser like react-markdown in a real application
+interface Blog {
+  id: string;
+  title: string;
+  content: string;
+  excerpt: string;
+  date: string;
+  tags: string[];
+  featuredImage?: string;
+  readTime?: string;
+  created_at: string;
+  featured_image_url?: string;
+}
 
 const BlogPost = () => {
   const { id } = useParams<{ id: string }>();
-  const blog = blogsData.find(blog => blog.id === id);
+  const navigate = useNavigate();
+  const [blog, setBlog] = useState<Blog | null>(null);
+  const [loading, setLoading] = useState(true);
   
   useEffect(() => {
     window.scrollTo(0, 0);
+    fetchBlog();
   }, [id]);
+  
+  const fetchBlog = async () => {
+    if (!id) return;
+    
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('blogs')
+        .select('*')
+        .eq('id', id)
+        .single();
+      
+      if (error) throw error;
+      
+      if (!data) {
+        navigate('/blogs');
+        return;
+      }
+      
+      // Transform the data
+      const formattedBlog = {
+        id: data.id,
+        title: data.title,
+        content: data.content || '',
+        excerpt: data.excerpt || '',
+        date: new Date(data.created_at).toLocaleDateString(),
+        tags: data.tags || [],
+        featuredImage: data.featured_image_url,
+        readTime: '5 min read', // Default read time
+        created_at: data.created_at
+      };
+      
+      setBlog(formattedBlog);
+    } catch (error: any) {
+      console.error('Error fetching blog:', error);
+      toast.error('Failed to load blog post');
+      navigate('/blogs');
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  if (loading) {
+    return (
+      <Layout>
+        <div className="min-h-[60vh] flex items-center justify-center">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-portfolio-lightestSlate mb-4">Loading...</h2>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
   
   if (!blog) {
     return (

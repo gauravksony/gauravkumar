@@ -4,7 +4,6 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
@@ -15,6 +14,7 @@ import {
 import { toast } from 'sonner';
 import { Database } from '@/integrations/supabase/types';
 import { Image } from 'lucide-react';
+import RichTextEditor from '@/components/common/RichTextEditor';
 
 type StudyMaterialCategory = Database['public']['Enums']['study_material_category'];
 
@@ -170,11 +170,10 @@ const StudyMaterialForm = ({ material, onClose }: StudyMaterialFormProps) => {
 
       <div className="space-y-2">
         <Label htmlFor="description">Description</Label>
-        <Textarea
-          id="description"
+        <RichTextEditor
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          rows={5}
+          onChange={setDescription}
+          bucket="blog_images"
         />
       </div>
 
@@ -224,4 +223,3 @@ const StudyMaterialForm = ({ material, onClose }: StudyMaterialFormProps) => {
 };
 
 export default StudyMaterialForm;
-

@@ -5,6 +5,7 @@ import Layout from '@/components/common/Layout';
 import { Calendar, Clock, ArrowLeft, Share2, Twitter, Facebook, Linkedin } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import RichContent from '@/components/common/RichContent';
 
 interface Blog {
   id: string;
@@ -172,12 +173,11 @@ const BlogPost = () => {
           
           {/* Blog Content */}
           <div className="prose prose-lg prose-invert prose-cyan max-w-none">
-            {/* In a real app, you would render the content using a markdown parser */}
-            <div className="text-portfolio-slate">
-              {blog.content.split('\n').map((paragraph, index) => (
-                <p key={index} className="mb-4">{paragraph}</p>
-              ))}
-            </div>
+            {/* Render rich content */}
+            <RichContent 
+              content={blog.content} 
+              className="text-portfolio-slate"
+            />
           </div>
           
           {/* Author Bio */}

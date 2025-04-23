@@ -17,7 +17,6 @@ export type Database = {
           excerpt: string | null
           featured_image_url: string | null
           id: string
-          image: Database["public"]["Enums"]["study_material_category"][] | null
           slug: string
           tags: string[] | null
           title: string
@@ -30,9 +29,6 @@ export type Database = {
           excerpt?: string | null
           featured_image_url?: string | null
           id?: string
-          image?:
-            | Database["public"]["Enums"]["study_material_category"][]
-            | null
           slug: string
           tags?: string[] | null
           title: string
@@ -45,9 +41,6 @@ export type Database = {
           excerpt?: string | null
           featured_image_url?: string | null
           id?: string
-          image?:
-            | Database["public"]["Enums"]["study_material_category"][]
-            | null
           slug?: string
           tags?: string[] | null
           title?: string

@@ -7,7 +7,7 @@ interface ProjectCardProps {
   technologies: string[];
   githubUrl?: string;
   liveUrl?: string;
-  image?: string;
+  image_url?: string; // Updated to match Supabase field name
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({
@@ -16,15 +16,15 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   technologies,
   githubUrl,
   liveUrl,
-  image
+  image_url // Updated to match Supabase field name
 }) => {
   return (
     <div className="card group overflow-hidden flex flex-col h-full">
       {/* Project Image */}
-      {image && (
+      {image_url && (
         <div className="w-full h-48 overflow-hidden rounded-md mb-4">
           <img 
-            src={image} 
+            src={image_url} 
             alt={title} 
             className="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-500"
           />

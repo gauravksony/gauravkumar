@@ -1,22 +1,44 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Layout from '@/components/common/Layout';
 import ProjectCard from '@/components/cards/ProjectCard';
-import { projectsData } from '@/data/mockData';
+import { supabase } from '@/integrations/supabase/client';
 import { Search } from 'lucide-react';
 
 const ProjectsPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTech, setSelectedTech] = useState<string | null>(null);
   const [showFeaturedOnly, setShowFeaturedOnly] = useState(false);
+  const [projects, setProjects] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  const fetchProjects = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('projects')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setProjects(data || []);
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
   
   // Get all unique tech
   const allTech = Array.from(
-    new Set(projectsData.flatMap(project => project.technologies))
+    new Set(projects.flatMap(project => project.technologies))
   );
   
   // Filter projects based on search term, selected tech, and featured status
-  const filteredProjects = projectsData.filter(project => {
+  const filteredProjects = projects.filter(project => {
     const matchesSearch = !searchTerm || 
       project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       project.description.toLowerCase().includes(searchTerm.toLowerCase());
@@ -86,7 +108,11 @@ const ProjectsPage = () => {
           </div>
           
           {/* Projects Grid */}
-          {filteredProjects.length > 0 ? (
+          {loading ? (
+            <div className="text-center py-12">
+              <h3 className="text-xl text-portfolio-lightestSlate mb-2">Loading projects...</h3>
+            </div>
+          ) : filteredProjects.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredProjects.map(project => (
                 <ProjectCard key={project.id} {...project} />

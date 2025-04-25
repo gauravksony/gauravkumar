@@ -48,6 +48,84 @@ export type Database = {
         }
         Relationships: []
       }
+      experiences: {
+        Row: {
+          created_at: string
+          description: string[]
+          end_date: string
+          id: string
+          location: string
+          organization: string
+          start_date: string
+          title: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string[]
+          end_date: string
+          id?: string
+          location: string
+          organization: string
+          start_date: string
+          title: string
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string[]
+          end_date?: string
+          id?: string
+          location?: string
+          organization?: string
+          start_date?: string
+          title?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      projects: {
+        Row: {
+          created_at: string
+          description: string
+          featured: boolean | null
+          github_url: string | null
+          id: string
+          image_url: string | null
+          live_url: string | null
+          technologies: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          featured?: boolean | null
+          github_url?: string | null
+          id?: string
+          image_url?: string | null
+          live_url?: string | null
+          technologies?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          featured?: boolean | null
+          github_url?: string | null
+          id?: string
+          image_url?: string | null
+          live_url?: string | null
+          technologies?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       study_materials: {
         Row: {
           category: Database["public"]["Enums"]["study_material_category"]

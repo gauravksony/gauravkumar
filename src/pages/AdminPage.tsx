@@ -6,6 +6,8 @@ import Layout from '@/components/common/Layout';
 import { Button } from '@/components/ui/button';
 import AdminBlogList from '@/components/admin/AdminBlogList';
 import AdminStudyMaterials from '@/components/admin/AdminStudyMaterials';
+import AdminProjects from '@/components/admin/AdminProjects';
+import AdminExperiences from '@/components/admin/AdminExperiences';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 
@@ -58,15 +60,23 @@ const AdminPage = () => {
         </div>
 
         <Tabs defaultValue="blogs">
-          <TabsList className="grid w-full grid-cols-2">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="blogs">Blogs</TabsTrigger>
             <TabsTrigger value="materials">Study Materials</TabsTrigger>
+            <TabsTrigger value="projects">Projects</TabsTrigger>
+            <TabsTrigger value="experiences">Experiences</TabsTrigger>
           </TabsList>
           <TabsContent value="blogs" className="mt-6">
             <AdminBlogList />
           </TabsContent>
           <TabsContent value="materials" className="mt-6">
             <AdminStudyMaterials />
+          </TabsContent>
+          <TabsContent value="projects" className="mt-6">
+            <AdminProjects />
+          </TabsContent>
+          <TabsContent value="experiences" className="mt-6">
+            <AdminExperiences />
           </TabsContent>
         </Tabs>
       </div>

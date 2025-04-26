@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -142,7 +141,7 @@ const BlogForm = ({ blog, onClose }: BlogFormProps) => {
         <Input
           id="tags"
           value={tags}
-          onChange={handleTagsChange}
+          onChange={(e) => setTags(e.target.value)}
           placeholder="technology, programming, webdev"
         />
       </div>
@@ -162,7 +161,14 @@ const BlogForm = ({ blog, onClose }: BlogFormProps) => {
           id="image"
           type="file"
           accept="image/*"
-          onChange={handleFeaturedImageChange}
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) {
+              setFeaturedImage(file);
+              const previewUrl = URL.createObjectURL(file);
+              setFeaturedImagePreview(previewUrl);
+            }
+          }}
         />
         
         {featuredImagePreview && (

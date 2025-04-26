@@ -1,7 +1,7 @@
 
 import { useState, useRef, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
-import { FileImage, Bold, Italic, Underline, ListOrdered, ListUnordered, AlignLeft, AlignCenter, AlignRight } from 'lucide-react';
+import { FileImage, Bold, Italic, Underline, ListOrdered, List, AlignLeft, AlignCenter, AlignRight } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
@@ -123,7 +123,7 @@ const RichTextEditor = ({ value, onChange, bucket }: RichTextEditorProps) => {
           onClick={() => execCommand('insertUnorderedList')}
           title="Bullet List"
         >
-          <ListUnordered className="w-4 h-4" />
+          <List className="w-4 h-4" />
         </Button>
         
         <Button 

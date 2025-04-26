@@ -47,7 +47,7 @@ const ExperienceForm = ({ onSuccess, initialData }: ExperienceFormProps) => {
         location: formData.location,
         start_date: formData.start_date,
         end_date: formData.end_date,
-        description,
+        description: description.join('\n'), // Convert array to string with newlines
         type: formData.type as 'work' | 'education'
       };
 

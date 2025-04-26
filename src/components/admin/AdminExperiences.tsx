@@ -26,10 +26,10 @@ const AdminExperiences = () => {
       // Transform the data to ensure description is always an array
       const formattedData = (data || []).map(item => ({
         ...item,
-        description: Array.isArray(item.description) 
-          ? item.description 
-          : typeof item.description === 'string'
-            ? item.description.split('\n').filter(line => line.trim().length > 0)
+        description: typeof item.description === 'string'
+          ? item.description.split('\n').filter(line => line.trim().length > 0)
+          : Array.isArray(item.description)
+            ? item.description
             : []
       }));
       

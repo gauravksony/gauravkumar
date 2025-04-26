@@ -20,6 +20,7 @@ const BlogForm = ({ blog, onClose }: BlogFormProps) => {
   const [featuredImage, setFeaturedImage] = useState<File | null>(null);
   const [featuredImagePreview, setFeaturedImagePreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [tags, setTags] = useState<string>('');
 
   useEffect(() => {
     if (blog) {
@@ -28,6 +29,9 @@ const BlogForm = ({ blog, onClose }: BlogFormProps) => {
       setContent(blog.content || '');
       if (blog.featured_image_url) {
         setFeaturedImagePreview(blog.featured_image_url);
+      }
+      if (blog.tags) {
+        setTags(blog.tags.join(', '));
       }
     }
   }, [blog]);
@@ -39,6 +43,10 @@ const BlogForm = ({ blog, onClose }: BlogFormProps) => {
       const previewUrl = URL.createObjectURL(file);
       setFeaturedImagePreview(previewUrl);
     }
+  };
+
+  const handleTagsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTags(e.target.value);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -64,11 +72,24 @@ const BlogForm = ({ blog, onClose }: BlogFormProps) => {
         featuredImageUrl = publicUrl;
       }
 
+      // Process tags from comma-separated string to array
+      const tagsArray = tags
+        .split(',')
+        .map(tag => tag.trim())
+        .filter(tag => tag.length > 0);
+
+      // Create excerpt from content (strip HTML and limit characters)
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = content;
+      const excerpt = tempDiv.textContent?.slice(0, 150) + '...' || '';
+
       const blogData = {
         title,
         slug,
         content,
+        excerpt,
         featured_image_url: featuredImageUrl,
+        tags: tagsArray,
       };
 
       if (blog) {
@@ -113,6 +134,16 @@ const BlogForm = ({ blog, onClose }: BlogFormProps) => {
           value={slug}
           onChange={(e) => setSlug(e.target.value)}
           required
+        />
+      </div>
+      
+      <div className="space-y-2">
+        <Label htmlFor="tags">Tags (comma separated)</Label>
+        <Input
+          id="tags"
+          value={tags}
+          onChange={handleTagsChange}
+          placeholder="technology, programming, webdev"
         />
       </div>
       

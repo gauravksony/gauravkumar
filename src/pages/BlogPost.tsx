@@ -1,3 +1,4 @@
+
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Layout from '@/components/common/Layout';
@@ -10,7 +11,7 @@ import { Json } from '@/integrations/supabase/types';
 interface Blog {
   id: string;
   title: string;
-  content: string | number | boolean | { [key: string]: Json | undefined } | Json[];
+  content: string;
   excerpt: string;
   date: string;
   tags: string[];
@@ -53,12 +54,12 @@ const BlogPost = () => {
       const formattedBlog = {
         id: data.id,
         title: data.title,
-        content: data.content || '',
+        content: typeof data.content === 'string' ? data.content : JSON.stringify(data.content),
         excerpt: data.excerpt || '',
         date: new Date(data.created_at).toLocaleDateString(),
         tags: data.tags || [],
         featuredImage: data.featured_image_url,
-        readTime: '5 min read', // Default read time
+        readTime: estimateReadTime(data.content) + ' min read',
         created_at: data.created_at
       };
       
@@ -70,6 +71,23 @@ const BlogPost = () => {
     } finally {
       setLoading(false);
     }
+  };
+  
+  const estimateReadTime = (content: any): string => {
+    // Strip HTML tags if content is a string
+    let text = '';
+    if (typeof content === 'string') {
+      const div = document.createElement('div');
+      div.innerHTML = content;
+      text = div.textContent || '';
+    } else {
+      text = JSON.stringify(content);
+    }
+    
+    // Average reading speed: 200 words per minute
+    const words = text.trim().split(/\s+/).length;
+    const minutes = Math.ceil(words / 200);
+    return minutes.toString();
   };
   
   if (loading) {
@@ -175,7 +193,7 @@ const BlogPost = () => {
           <div className="prose prose-lg prose-invert prose-cyan max-w-none">
             {/* Render rich content */}
             <RichContent 
-              content={typeof blog.content === 'string' ? blog.content : JSON.stringify(blog.content)} 
+              content={blog.content} 
               className="text-portfolio-slate"
             />
           </div>

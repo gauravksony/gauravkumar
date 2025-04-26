@@ -22,7 +22,18 @@ const AdminExperiences = () => {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setExperiences(data || []);
+      
+      // Transform the data to ensure description is always an array
+      const formattedData = (data || []).map(item => ({
+        ...item,
+        description: Array.isArray(item.description) 
+          ? item.description 
+          : typeof item.description === 'string'
+            ? item.description.split('\n').filter(line => line.trim().length > 0)
+            : []
+      }));
+      
+      setExperiences(formattedData);
     } catch (error: any) {
       toast.error('Error fetching experiences: ' + error.message);
     } finally {

@@ -11,7 +11,7 @@ export type Database = {
     Tables: {
       blogs: {
         Row: {
-          content: string | null
+          content: Json | null
           created_at: string
           "example 1 column": string | null
           excerpt: string | null
@@ -23,7 +23,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
-          content?: string | null
+          content?: Json | null
           created_at?: string
           "example 1 column"?: string | null
           excerpt?: string | null
@@ -35,7 +35,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
-          content?: string | null
+          content?: Json | null
           created_at?: string
           "example 1 column"?: string | null
           excerpt?: string | null
@@ -51,7 +51,7 @@ export type Database = {
       experiences: {
         Row: {
           created_at: string
-          description: string[]
+          description: string
           end_date: string
           id: string
           location: string
@@ -63,7 +63,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
-          description?: string[]
+          description: string
           end_date: string
           id?: string
           location: string
@@ -75,7 +75,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
-          description?: string[]
+          description?: string
           end_date?: string
           id?: string
           location?: string
@@ -178,6 +178,7 @@ export type Database = {
         | "Machine Learning"
         | "Interview Prep"
         | "Other"
+        | "Self Help"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -304,6 +305,7 @@ export const Constants = {
         "Machine Learning",
         "Interview Prep",
         "Other",
+        "Self Help",
       ],
     },
   },

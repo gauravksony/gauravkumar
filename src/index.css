@@ -1,5 +1,5 @@
 
-/* Add this at the end of your index.css file */
+/* ... keep existing code */
 
 /* Rich content styling */
 .rich-content h1 {
@@ -101,4 +101,24 @@
 .rich-content th {
   background-color: rgba(255, 255, 255, 0.05);
   font-weight: 600;
+}
+
+/* Active navigation link animation */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #64ffda;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.nav-link.active::after {
+  width: 100%;
 }

@@ -50,16 +50,25 @@ const BlogPost = () => {
         return;
       }
       
+      // Ensure content is a string for RichContent component
+      let contentString: string;
+      if (typeof data.content === 'string') {
+        contentString = data.content;
+      } else {
+        // Convert JSON to string if needed
+        contentString = JSON.stringify(data.content);
+      }
+      
       // Transform the data
       const formattedBlog = {
         id: data.id,
         title: data.title,
-        content: typeof data.content === 'string' ? data.content : JSON.stringify(data.content),
+        content: contentString,
         excerpt: data.excerpt || '',
         date: new Date(data.created_at).toLocaleDateString(),
         tags: data.tags || [],
         featuredImage: data.featured_image_url,
-        readTime: estimateReadTime(data.content) + ' min read',
+        readTime: estimateReadTime(contentString) + ' min read',
         created_at: data.created_at
       };
       
@@ -73,16 +82,11 @@ const BlogPost = () => {
     }
   };
   
-  const estimateReadTime = (content: any): string => {
-    // Strip HTML tags if content is a string
-    let text = '';
-    if (typeof content === 'string') {
-      const div = document.createElement('div');
-      div.innerHTML = content;
-      text = div.textContent || '';
-    } else {
-      text = JSON.stringify(content);
-    }
+  const estimateReadTime = (content: string): string => {
+    // Strip HTML tags
+    const div = document.createElement('div');
+    div.innerHTML = content;
+    const text = div.textContent || '';
     
     // Average reading speed: 200 words per minute
     const words = text.trim().split(/\s+/).length;

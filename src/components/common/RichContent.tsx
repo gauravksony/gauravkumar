@@ -7,14 +7,12 @@ interface RichContentProps {
 }
 
 const RichContent: React.FC<RichContentProps> = ({ content, className = '' }) => {
-  // This component safely renders HTML content
-  
   // If content is empty, return null
   if (!content) return null;
   
   return (
     <div 
-      className={`rich-content ${className}`}
+      className={`rich-content prose prose-invert prose-cyan max-w-none ${className}`}
       dangerouslySetInnerHTML={{ __html: content }}
     />
   );

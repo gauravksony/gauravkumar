@@ -1,7 +1,7 @@
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
-import { FileImage, Bold, Italic, Underline, ListOrdered, List, AlignLeft, AlignCenter, AlignRight } from 'lucide-react';
+import { FileImage } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
@@ -14,16 +14,6 @@ interface RichTextEditorProps {
 const RichTextEditor = ({ value, onChange, bucket }: RichTextEditorProps) => {
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const editorRef = useRef<HTMLDivElement>(null);
-  
-  const execCommand = useCallback((command: string, value: string = '') => {
-    document.execCommand(command, false, value);
-    
-    // After executing the command, update the value with the HTML content
-    if (editorRef.current) {
-      onChange(editorRef.current.innerHTML);
-    }
-  }, [onChange]);
   
   const handleInsertImage = async (file: File) => {
     try {
@@ -45,8 +35,11 @@ const RichTextEditor = ({ value, onChange, bucket }: RichTextEditorProps) => {
         .from(bucket)
         .getPublicUrl(fileName);
       
-      // Insert image HTML at cursor position
-      execCommand('insertHTML', `<img src="${publicUrl}" alt="Content image" class="my-4 rounded-md max-w-full" />`);
+      // Insert image tag at cursor position or at the end
+      const imageHtml = `\n<img src="${publicUrl}" alt="Content image" class="my-4 rounded-md max-w-full" />\n`;
+      
+      // Simple insertion at the end if we don't have more complex cursor handling
+      onChange(value + imageHtml);
       
       toast.success('Image inserted successfully');
     } catch (error: any) {
@@ -66,96 +59,10 @@ const RichTextEditor = ({ value, onChange, bucket }: RichTextEditorProps) => {
       handleInsertImage(file);
     }
   };
-
-  const handleEditorChange = () => {
-    if (editorRef.current) {
-      onChange(editorRef.current.innerHTML);
-    }
-  };
   
   return (
     <div className="w-full space-y-2">
-      <div className="flex flex-wrap items-center gap-2 p-2 bg-portfolio-lightestNavy rounded-t-md">
-        <Button 
-          type="button" 
-          variant="outline" 
-          size="sm"
-          onClick={() => execCommand('bold')}
-          title="Bold"
-        >
-          <Bold className="w-4 h-4" />
-        </Button>
-        
-        <Button 
-          type="button" 
-          variant="outline" 
-          size="sm"
-          onClick={() => execCommand('italic')}
-          title="Italic"
-        >
-          <Italic className="w-4 h-4" />
-        </Button>
-        
-        <Button 
-          type="button" 
-          variant="outline" 
-          size="sm"
-          onClick={() => execCommand('underline')}
-          title="Underline"
-        >
-          <Underline className="w-4 h-4" />
-        </Button>
-        
-        <Button 
-          type="button" 
-          variant="outline" 
-          size="sm"
-          onClick={() => execCommand('insertOrderedList')}
-          title="Numbered List"
-        >
-          <ListOrdered className="w-4 h-4" />
-        </Button>
-        
-        <Button 
-          type="button" 
-          variant="outline" 
-          size="sm"
-          onClick={() => execCommand('insertUnorderedList')}
-          title="Bullet List"
-        >
-          <List className="w-4 h-4" />
-        </Button>
-        
-        <Button 
-          type="button" 
-          variant="outline" 
-          size="sm"
-          onClick={() => execCommand('justifyLeft')}
-          title="Align Left"
-        >
-          <AlignLeft className="w-4 h-4" />
-        </Button>
-        
-        <Button 
-          type="button" 
-          variant="outline" 
-          size="sm"
-          onClick={() => execCommand('justifyCenter')}
-          title="Align Center"
-        >
-          <AlignCenter className="w-4 h-4" />
-        </Button>
-        
-        <Button 
-          type="button" 
-          variant="outline" 
-          size="sm"
-          onClick={() => execCommand('justifyRight')}
-          title="Align Right"
-        >
-          <AlignRight className="w-4 h-4" />
-        </Button>
-        
+      <div className="flex items-center space-x-2 mb-2 bg-portfolio-lightestNavy p-2 rounded-t-md">
         <Button 
           type="button" 
           variant="outline" 
@@ -166,7 +73,6 @@ const RichTextEditor = ({ value, onChange, bucket }: RichTextEditorProps) => {
           <FileImage className="w-4 h-4 mr-2" />
           {loading ? 'Inserting...' : 'Insert Image'}
         </Button>
-        
         <input
           type="file"
           ref={fileInputRef}
@@ -176,18 +82,16 @@ const RichTextEditor = ({ value, onChange, bucket }: RichTextEditorProps) => {
         />
       </div>
       
-      <div
-        ref={editorRef}
-        className="min-h-[250px] p-3 bg-portfolio-navy border border-portfolio-lightestNavy rounded-b-md text-portfolio-lightSlate focus:outline-none"
-        contentEditable={true}
-        dangerouslySetInnerHTML={{ __html: value }}
-        onInput={handleEditorChange}
-        style={{ overflowY: 'auto' }}
+      <textarea
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full min-h-[250px] p-3 bg-portfolio-navy border border-portfolio-lightestNavy rounded-b-md text-portfolio-lightSlate focus:outline-none focus:ring-2 focus:ring-portfolio-cyan/50 focus:border-transparent"
+        placeholder="Write your content here... You can add rich content like HTML tags and images."
       />
       
       <div className="text-sm text-portfolio-slate">
-        <p>Use the toolbar above to format your text and insert images.</p>
-        <p>You can also use keyboard shortcuts: Ctrl+B (bold), Ctrl+I (italic), Ctrl+U (underline).</p>
+        <p>To add images, click the "Insert Image" button above.</p>
+        <p>You can also use HTML tags for formatting: &lt;h1&gt;, &lt;p&gt;, &lt;ul&gt;, &lt;li&gt;, etc.</p>
       </div>
     </div>
   );

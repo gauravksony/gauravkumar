@@ -1,12 +1,11 @@
 
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Menu, X, Github, Linkedin, Instagram, Youtube } from 'lucide-react';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,12 +24,6 @@ const Header = () => {
     { name: 'Contact', path: '/contact' },
   ];
 
-  // Helper to check if a link is active
-  const isActive = (path: string) => {
-    return location.pathname === path || 
-           (path !== '/' && location.pathname.startsWith(path));
-  };
-
   return (
     <header 
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 py-4 px-6 md:px-12 
@@ -44,16 +37,13 @@ const Header = () => {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
           <ul className="flex space-x-6">
-            {navLinks.map((link) => (
+            {navLinks.map((link, index) => (
               <li key={link.name}>
                 <Link 
                   to={link.path} 
-                  className={`nav-link font-medium relative ${isActive(link.path) ? 'text-portfolio-cyan' : 'text-portfolio-lightSlate'} hover:text-portfolio-cyan transition-colors`}
+                  className="nav-link font-medium"
                 >
-                  <span>{link.name}</span>
-                  {isActive(link.path) && (
-                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-portfolio-cyan transform origin-bottom-right animate-[width_0.2s_ease-out]"></span>
-                  )}
+                  <span className="text-portfolio-cyan font-mono mr-1">{`0${index + 1}.`}</span> {link.name}
                 </Link>
               </li>
             ))}
@@ -89,13 +79,14 @@ const Header = () => {
           <div className="md:hidden fixed top-[4rem] right-0 h-screen w-3/4 bg-portfolio-lightNavy/95 backdrop-blur-lg z-50 py-8 px-6 animate-slide-in-right">
             <nav className="flex flex-col items-center">
               <ul className="flex flex-col space-y-6 w-full">
-                {navLinks.map((link) => (
+                {navLinks.map((link, index) => (
                   <li key={link.name} className="text-center">
                     <Link 
                       to={link.path} 
-                      className={`${isActive(link.path) ? 'text-portfolio-cyan' : 'text-portfolio-lightSlate'} hover:text-portfolio-cyan font-medium transition-colors block py-2`}
+                      className="text-portfolio-lightSlate hover:text-portfolio-cyan font-medium transition-colors block py-2"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
+                      <span className="text-portfolio-cyan font-mono mr-1 block text-sm">{`0${index + 1}.`}</span> 
                       {link.name}
                     </Link>
                   </li>

@@ -1,11 +1,15 @@
-
-import { useEffect, useState } from 'react';
-import { Edit, Trash2 } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import ProjectForm from './ProjectForm';
-import { toast } from 'sonner';
+import { useEffect, useState } from "react";
+import { Edit, Trash2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import ProjectForm from "./ProjectForm";
+import { toast } from "sonner";
 
 const AdminProjects = () => {
   const [projects, setProjects] = useState<any[]>([]);
@@ -17,14 +21,14 @@ const AdminProjects = () => {
     try {
       setLoading(true);
       const { data, error } = await supabase
-        .from('projects')
-        .select('*')
-        .order('created_at', { ascending: false });
+        .from("projects")
+        .select("*")
+        .order("created_at", { ascending: false });
 
       if (error) throw error;
       setProjects(data || []);
     } catch (error: any) {
-      toast.error('Error fetching projects: ' + error.message);
+      toast.error("Error fetching projects: " + error.message);
     } finally {
       setLoading(false);
     }
@@ -35,20 +39,17 @@ const AdminProjects = () => {
   }, []);
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this project?')) return;
-    
+    if (!confirm("Are you sure you want to delete this project?")) return;
+
     try {
-      const { error } = await supabase
-        .from('projects')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.from("projects").delete().eq("id", id);
 
       if (error) throw error;
-      
-      toast.success('Project deleted successfully');
+
+      toast.success("Project deleted successfully");
       fetchProjects();
     } catch (error: any) {
-      toast.error('Error deleting project: ' + error.message);
+      toast.error("Error deleting project: " + error.message);
     }
   };
 
@@ -56,10 +57,12 @@ const AdminProjects = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold">Projects</h2>
-        <Button onClick={() => {
-          setSelectedProject(null);
-          setShowForm(true);
-        }}>
+        <Button
+          onClick={() => {
+            setSelectedProject(null);
+            setShowForm(true);
+          }}
+        >
           Add Project
         </Button>
       </div>
@@ -70,14 +73,16 @@ const AdminProjects = () => {
         <p>No projects found. Add your first project!</p>
       ) : (
         <div className="grid gap-4">
-          {projects.map(project => (
-            <div 
-              key={project.id} 
+          {projects.map((project) => (
+            <div
+              key={project.id}
               className="p-4 border rounded-lg bg-card flex items-center justify-between"
             >
               <div>
                 <h3 className="font-medium">{project.title}</h3>
-                <p className="text-sm text-muted-foreground">{project.description}</p>
+                <p className="text-sm text-muted-foreground">
+                  {project.description}
+                </p>
               </div>
               <div className="flex gap-2">
                 <Button
@@ -107,7 +112,7 @@ const AdminProjects = () => {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>
-              {selectedProject ? 'Edit Project' : 'Add Project'}
+              {selectedProject ? "Edit Project" : "Add Project"}
             </DialogTitle>
           </DialogHeader>
           <ProjectForm

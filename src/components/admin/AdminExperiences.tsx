@@ -1,11 +1,15 @@
-
-import { useEffect, useState } from 'react';
-import { Edit, Trash2 } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import ExperienceForm from './ExperienceForm';
-import { toast } from 'sonner';
+import { useEffect, useState } from "react";
+import { Edit, Trash2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import ExperienceForm from "./ExperienceForm";
+import { toast } from "sonner";
 
 const AdminExperiences = () => {
   const [experiences, setExperiences] = useState<any[]>([]);
@@ -17,14 +21,14 @@ const AdminExperiences = () => {
     try {
       setLoading(true);
       const { data, error } = await supabase
-        .from('experiences')
-        .select('*')
-        .order('created_at', { ascending: false });
+        .from("experiences")
+        .select("*")
+        .order("created_at", { ascending: false });
 
       if (error) throw error;
       setExperiences(data || []);
     } catch (error: any) {
-      toast.error('Error fetching experiences: ' + error.message);
+      toast.error("Error fetching experiences: " + error.message);
     } finally {
       setLoading(false);
     }
@@ -35,20 +39,20 @@ const AdminExperiences = () => {
   }, []);
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this experience?')) return;
-    
+    if (!confirm("Are you sure you want to delete this experience?")) return;
+
     try {
       const { error } = await supabase
-        .from('experiences')
+        .from("experiences")
         .delete()
-        .eq('id', id);
+        .eq("id", id);
 
       if (error) throw error;
-      
-      toast.success('Experience deleted successfully');
+
+      toast.success("Experience deleted successfully");
       fetchExperiences();
     } catch (error: any) {
-      toast.error('Error deleting experience: ' + error.message);
+      toast.error("Error deleting experience: " + error.message);
     }
   };
 
@@ -56,10 +60,12 @@ const AdminExperiences = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold">Experiences</h2>
-        <Button onClick={() => {
-          setSelectedExperience(null);
-          setShowForm(true);
-        }}>
+        <Button
+          onClick={() => {
+            setSelectedExperience(null);
+            setShowForm(true);
+          }}
+        >
           Add Experience
         </Button>
       </div>
@@ -70,9 +76,9 @@ const AdminExperiences = () => {
         <p>No experiences found. Add your first experience!</p>
       ) : (
         <div className="grid gap-4">
-          {experiences.map(experience => (
-            <div 
-              key={experience.id} 
+          {experiences.map((experience) => (
+            <div
+              key={experience.id}
               className="p-4 border rounded-lg bg-card flex items-center justify-between"
             >
               <div>
@@ -112,7 +118,7 @@ const AdminExperiences = () => {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>
-              {selectedExperience ? 'Edit Experience' : 'Add Experience'}
+              {selectedExperience ? "Edit Experience" : "Add Experience"}
             </DialogTitle>
           </DialogHeader>
           <ExperienceForm

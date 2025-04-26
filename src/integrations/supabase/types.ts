@@ -11,161 +11,161 @@ export type Database = {
     Tables: {
       blogs: {
         Row: {
-          content: string | null
-          created_at: string
-          "example 1 column": string | null
-          excerpt: string | null
-          featured_image_url: string | null
-          id: string
-          slug: string
-          tags: string[] | null
-          title: string
-          updated_at: string
-        }
+          content: string | null;
+          created_at: string;
+          "example 1 column": string | null;
+          excerpt: string | null;
+          featured_image_url: string | null;
+          id: string;
+          slug: string;
+          tags: string[] | null;
+          title: string;
+          updated_at: string;
+        };
         Insert: {
-          content?: string | null
-          created_at?: string
-          "example 1 column"?: string | null
-          excerpt?: string | null
-          featured_image_url?: string | null
-          id?: string
-          slug: string
-          tags?: string[] | null
-          title: string
-          updated_at?: string
-        }
+          content?: string | null;
+          created_at?: string;
+          "example 1 column"?: string | null;
+          excerpt?: string | null;
+          featured_image_url?: string | null;
+          id?: string;
+          slug: string;
+          tags?: string[] | null;
+          title: string;
+          updated_at?: string;
+        };
         Update: {
-          content?: string | null
-          created_at?: string
-          "example 1 column"?: string | null
-          excerpt?: string | null
-          featured_image_url?: string | null
-          id?: string
-          slug?: string
-          tags?: string[] | null
-          title?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
+          content?: string | null;
+          created_at?: string;
+          "example 1 column"?: string | null;
+          excerpt?: string | null;
+          featured_image_url?: string | null;
+          id?: string;
+          slug?: string;
+          tags?: string[] | null;
+          title?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       experiences: {
         Row: {
-          created_at: string
-          description: string[]
-          end_date: string
-          id: string
-          location: string
-          organization: string
-          start_date: string
-          title: string
-          type: string
-          updated_at: string
-        }
+          created_at: string;
+          description: string[];
+          end_date: string;
+          id: string;
+          location: string;
+          organization: string;
+          start_date: string;
+          title: string;
+          type: string;
+          updated_at: string;
+        };
         Insert: {
-          created_at?: string
-          description?: string[]
-          end_date: string
-          id?: string
-          location: string
-          organization: string
-          start_date: string
-          title: string
-          type: string
-          updated_at?: string
-        }
+          created_at?: string;
+          description?: string[];
+          end_date: string;
+          id?: string;
+          location: string;
+          organization: string;
+          start_date: string;
+          title: string;
+          type: string;
+          updated_at?: string;
+        };
         Update: {
-          created_at?: string
-          description?: string[]
-          end_date?: string
-          id?: string
-          location?: string
-          organization?: string
-          start_date?: string
-          title?: string
-          type?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
+          created_at?: string;
+          description?: string[];
+          end_date?: string;
+          id?: string;
+          location?: string;
+          organization?: string;
+          start_date?: string;
+          title?: string;
+          type?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       projects: {
         Row: {
-          created_at: string
-          description: string
-          featured: boolean | null
-          github_url: string | null
-          id: string
-          image_url: string | null
-          live_url: string | null
-          technologies: string[] | null
-          title: string
-          updated_at: string
-        }
+          created_at: string;
+          description: string;
+          featured: boolean | null;
+          github_url: string | null;
+          id: string;
+          image_url: string | null;
+          live_url: string | null;
+          technologies: string[] | null;
+          title: string;
+          updated_at: string;
+        };
         Insert: {
-          created_at?: string
-          description: string
-          featured?: boolean | null
-          github_url?: string | null
-          id?: string
-          image_url?: string | null
-          live_url?: string | null
-          technologies?: string[] | null
-          title: string
-          updated_at?: string
-        }
+          created_at?: string;
+          description: string;
+          featured?: boolean | null;
+          github_url?: string | null;
+          id?: string;
+          image_url?: string | null;
+          live_url?: string | null;
+          technologies?: string[] | null;
+          title: string;
+          updated_at?: string;
+        };
         Update: {
-          created_at?: string
-          description?: string
-          featured?: boolean | null
-          github_url?: string | null
-          id?: string
-          image_url?: string | null
-          live_url?: string | null
-          technologies?: string[] | null
-          title?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
+          created_at?: string;
+          description?: string;
+          featured?: boolean | null;
+          github_url?: string | null;
+          id?: string;
+          image_url?: string | null;
+          live_url?: string | null;
+          technologies?: string[] | null;
+          title?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       study_materials: {
         Row: {
-          category: Database["public"]["Enums"]["study_material_category"]
-          description: string | null
-          file_url: string | null
-          id: string
-          thumbnail_url: string | null
-          title: string
-          updated_at: string
-          upload_date: string
-        }
+          category: Database["public"]["Enums"]["study_material_category"];
+          description: string | null;
+          file_url: string | null;
+          id: string;
+          thumbnail_url: string | null;
+          title: string;
+          updated_at: string;
+          upload_date: string;
+        };
         Insert: {
-          category: Database["public"]["Enums"]["study_material_category"]
-          description?: string | null
-          file_url?: string | null
-          id?: string
-          thumbnail_url?: string | null
-          title: string
-          updated_at?: string
-          upload_date?: string
-        }
+          category: Database["public"]["Enums"]["study_material_category"];
+          description?: string | null;
+          file_url?: string | null;
+          id?: string;
+          thumbnail_url?: string | null;
+          title: string;
+          updated_at?: string;
+          upload_date?: string;
+        };
         Update: {
-          category?: Database["public"]["Enums"]["study_material_category"]
-          description?: string | null
-          file_url?: string | null
-          id?: string
-          thumbnail_url?: string | null
-          title?: string
-          updated_at?: string
-          upload_date?: string
-        }
-        Relationships: []
-      }
-    }
+          category?: Database["public"]["Enums"]["study_material_category"];
+          description?: string | null;
+          file_url?: string | null;
+          id?: string;
+          thumbnail_url?: string | null;
+          title?: string;
+          updated_at?: string;
+          upload_date?: string;
+        };
+        Relationships: [];
+      };
+    };
     Views: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Functions: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Enums: {
       study_material_category:
         | "Programming"
@@ -177,13 +177,13 @@ export type Database = {
         | "Mobile Development"
         | "Machine Learning"
         | "Interview Prep"
-        | "Other"
-    }
+        | "Other";
+    };
     CompositeTypes: {
-      [_ in never]: never
-    }
-  }
-}
+      [_ in never]: never;
+    };
+  };
+};
 
 type DefaultSchema = Database[Extract<keyof Database, "public">]
 

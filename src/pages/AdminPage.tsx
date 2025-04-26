@@ -1,15 +1,14 @@
-
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
-import Layout from '@/components/common/Layout';
-import { Button } from '@/components/ui/button';
-import AdminBlogList from '@/components/admin/AdminBlogList';
-import AdminStudyMaterials from '@/components/admin/AdminStudyMaterials';
-import AdminProjects from '@/components/admin/AdminProjects';
-import AdminExperiences from '@/components/admin/AdminExperiences';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { toast } from 'sonner';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import Layout from "@/components/common/Layout";
+import { Button } from "@/components/ui/button";
+import AdminBlogList from "@/components/admin/AdminBlogList";
+import AdminStudyMaterials from "@/components/admin/AdminStudyMaterials";
+import AdminProjects from "@/components/admin/AdminProjects";
+import AdminExperiences from "@/components/admin/AdminExperiences";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { toast } from "sonner";
 
 const AdminPage = () => {
   const navigate = useNavigate();
@@ -21,32 +20,38 @@ const AdminPage = () => {
 
   const checkUser = async () => {
     try {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (!session) {
-        navigate('/auth');
+        navigate("/auth");
         return;
       }
       setLoading(false);
     } catch (error) {
-      console.error('Error:', error);
-      toast.error('Authentication error. Please try again.');
-      navigate('/auth');
+      console.error("Error:", error);
+      toast.error("Authentication error. Please try again.");
+      navigate("/auth");
     }
   };
 
   const handleLogout = async () => {
     try {
       await supabase.auth.signOut();
-      toast.success('Logged out successfully');
-      navigate('/auth');
+      toast.success("Logged out successfully");
+      navigate("/auth");
     } catch (error) {
-      console.error('Error:', error);
-      toast.error('Failed to logout. Please try again.');
+      console.error("Error:", error);
+      toast.error("Failed to logout. Please try again.");
     }
   };
 
   if (loading) {
-    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        Loading...
+      </div>
+    );
   }
 
   return (

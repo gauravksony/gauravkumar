@@ -304,18 +304,19 @@ export const studyMaterialsData = [
 
 // Personal Info
 export const personalInfo = {
-  name: 'John Doe',
-  title: 'Software Engineer & Computer Science Educator',
-  email: 'contact@johndoe.com',
-  phone: '+1 (123) 456-7890',
-  location: 'San Francisco, CA',
-  bio: 'I am a passionate software engineer with 5+ years of industry experience. I specialize in full-stack development with expertise in React, Node.js, and cloud technologies. I also enjoy teaching and sharing my knowledge through writing technical blogs and creating educational resources.',
-  resumeUrl: '#',
-  profileImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1374',
+  name: "Gaurav Kumar",
+  title: "Software Engineer & Computer Science Educator",
+  email: "gauravkumar.byte@gmail.com",
+  phone: "+91 7999617868",
+  location: "India",
+  bio: "I am a passionate software engineer in the making with hands-on experience in full-stack development using React, Django, and SQL. I enjoy learning modern technologies, building real-world projects, and sharing my knowledge through blogs, educational content, and helping fellow students grow.",
+  resumeUrl: "#",
+  profileImage:
+    "https://whnwzoxwuipgmwkqcops.supabase.co/storage/v1/object/public/project_images//1732425738630.jpg",
   socialLinks: {
-    github: 'https://github.com',
-    linkedin: 'https://linkedin.com',
-    youtube: 'https://youtube.com',
-    instagram: 'https://instagram.com',
+    github: "https://github.com/gauravkumarsony",
+    linkedin: "https://linkedin.com",
+    youtube: "https://youtube.com",
+    instagram: "https://instagram.com",
   },
 };

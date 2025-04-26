@@ -1,4 +1,3 @@
-
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Layout from '@/components/common/Layout';
@@ -6,11 +5,12 @@ import { Calendar, Clock, ArrowLeft, Share2, Twitter, Facebook, Linkedin } from 
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import RichContent from '@/components/common/RichContent';
+import { Json } from '@/integrations/supabase/types';
 
 interface Blog {
   id: string;
   title: string;
-  content: string;
+  content: string | number | boolean | { [key: string]: Json | undefined } | Json[];
   excerpt: string;
   date: string;
   tags: string[];
@@ -175,7 +175,7 @@ const BlogPost = () => {
           <div className="prose prose-lg prose-invert prose-cyan max-w-none">
             {/* Render rich content */}
             <RichContent 
-              content={blog.content} 
+              content={typeof blog.content === 'string' ? blog.content : JSON.stringify(blog.content)} 
               className="text-portfolio-slate"
             />
           </div>

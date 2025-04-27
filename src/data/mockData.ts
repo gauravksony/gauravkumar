@@ -304,18 +304,19 @@ export const studyMaterialsData = [
 
 // Personal Info
 export const personalInfo = {
-  name: 'John Doe',
-  title: 'Software Engineer & Computer Science Educator',
-  email: 'contact@johndoe.com',
-  phone: '+1 (123) 456-7890',
-  location: 'San Francisco, CA',
-  bio: 'I am a passionate software engineer with 5+ years of industry experience. I specialize in full-stack development with expertise in React, Node.js, and cloud technologies. I also enjoy teaching and sharing my knowledge through writing technical blogs and creating educational resources.',
-  resumeUrl: '#',
-  profileImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1374',
+  name: "Gaurav Kumar",
+  title: "Aspiring Software Engineer | Web Developer | Freelancer",
+  email: "gauravkumar.byte@gmail.com",
+  phone: "+91 7999617868",
+  location: "India",
+  bio: "a passionate developer and tech enthusiast who loves solving problems and building real-world projects.I come from a self-learning background where I constantly explore new technologies, frameworks, and tools. I have worked on multiple projects that show my ability to learn, adapt, and deliver solutions.I believe in the power of continuous learning, hard work, and smart work. My goal is to contribute to real-world tech solutions, grow as a professional, and make a positive impact through technology.",
+  resumeUrl: "#",
+  profileImage:
+    "https://whnwzoxwuipgmwkqcops.supabase.co/storage/v1/object/public/project_images//1732425738630.jpg",
   socialLinks: {
-    github: 'https://github.com',
-    linkedin: 'https://linkedin.com',
-    youtube: 'https://youtube.com',
-    instagram: 'https://instagram.com',
+    github: "https://github.com/gauravkumarsony",
+    linkedin: "https://linkedin.com/gauravksony",
+    youtube: "https://youtube.com/@gauravksony",
+    instagram: "https://instagram.com/gauravksony",
   },
 };

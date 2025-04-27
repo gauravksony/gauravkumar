@@ -11,7 +11,9 @@ const HomePage = () => {
       <section className="min-h-screen flex flex-col justify-center px-6 md:px-12 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
           <div className="md:col-span-7 animate-fade-in-up">
-            <h1 className="text-lg font-mono text-portfolio-cyan mb-4">Hi, my name is</h1>
+            <h1 className="text-lg font-mono text-portfolio-cyan mb-4">
+              Hi, my name is
+            </h1>
             <h2 className="hero-heading mb-4">{personalInfo.name}</h2>
             <h3 className="text-3xl md:text-4xl font-bold text-portfolio-slate mb-6">
               {personalInfo.title}
@@ -41,8 +43,8 @@ const HomePage = () => {
           <div className="md:col-span-5 flex justify-center md:justify-end animate-fade-in">
             <div className="relative">
               <div className="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-portfolio-cyan/20 shadow-xl">
-                <img 
-                  src={personalInfo.profileImage} 
+                <img
+                  src={personalInfo.profileImage}
                   alt={personalInfo.name}
                   className="w-full h-full object-cover"
                 />
@@ -57,27 +59,43 @@ const HomePage = () => {
           </a>
         </div>
       </section>
-      
+
       {/* About Section */}
-      <section id="about" className="py-20 px-6 md:px-12 bg-portfolio-lightNavy/30">
+      <section
+        id="about"
+        className="py-20 px-6 md:px-12 bg-portfolio-lightNavy/30"
+      >
         <div className="max-w-7xl mx-auto">
           <h2 className="section-heading">About Me</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-8">
             <div>
               <p className="text-portfolio-slate mb-4">
-                I'm a passionate software engineer and computer science educator with a strong foundation in both frontend and backend development. With over 5 years of industry experience, I've worked on a variety of projects ranging from e-commerce platforms to AI-powered applications.
+                I’m a passionate software engineer with hands-on experience in
+                AI, machine learning, web development, and C++. I've worked on a
+                variety of projects, from building full-stack web apps to
+                developing AI-powered solutions. I also have a strong foundation
+                in DSA, SQL, and databases.
               </p>
               <p className="text-portfolio-slate mb-4">
-                I hold a Master's degree in Computer Science from Stanford University where I specialized in Machine Learning and Artificial Intelligence. During my academic career, I published research papers on Neural Networks and served as a Teaching Assistant for Data Structures and Algorithms.
+                With a love for learning, I continuously explore new
+                technologies and enjoy sharing my knowledge through blogs and
+                mentoring. My goal is to make complex computer science concepts
+                accessible while building impactful software solutions.
               </p>
               <p className="text-portfolio-slate">
-                Beyond coding, I enjoy sharing my knowledge through writing technical blogs, creating educational content, and mentoring aspiring developers. I believe in making complex computer science concepts accessible to everyone.
+                Whether it’s developing innovative AI applications or creating
+                seamless web experiences, I’m always excited to solve problems
+                and grow in my craft.
               </p>
             </div>
             <div>
-              <h3 className="text-xl font-bold text-portfolio-lightestSlate mb-4">Skills & Expertise</h3>
+              <h3 className="text-xl font-bold text-portfolio-lightestSlate mb-4">
+                Skills & Expertise
+              </h3>
               <div className="mb-6">
-                <h4 className="font-mono text-portfolio-cyan mb-2">Languages</h4>
+                <h4 className="font-mono text-portfolio-cyan mb-2">
+                  Languages
+                </h4>
                 <div className="flex flex-wrap gap-2">
                   <span className="tag">JavaScript</span>
                   <span className="tag">TypeScript</span>
@@ -98,7 +116,9 @@ const HomePage = () => {
                 </div>
               </div>
               <div className="mb-6">
-                <h4 className="font-mono text-portfolio-cyan mb-2">Backend & DevOps</h4>
+                <h4 className="font-mono text-portfolio-cyan mb-2">
+                  Backend & DevOps
+                </h4>
                 <div className="flex flex-wrap gap-2">
                   <span className="tag">Node.js</span>
                   <span className="tag">Express</span>

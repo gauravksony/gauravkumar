@@ -1,12 +1,18 @@
-
-import { useState } from 'react';
-import { Send, Mail, User, MessageSquare, Loader } from 'lucide-react';
+import { useState, useRef } from "react";
+import { Send, Mail, User, MessageSquare, Loader } from "lucide-react";
+import emailjs from "@emailjs/browser";
+import {
+  EMAILJS_SERVICE_ID,
+  EMAILJS_TEMPLATE_ID,
+  EMAILJS_PUBLIC_KEY,
+} from "@/integrations/emailjs/config";
 
 const ContactForm = () => {
+  const formRef = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
+    name: "",
+    email: "",
+    message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{
@@ -14,11 +20,13 @@ const ContactForm = () => {
     message?: string;
   } | null>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -27,26 +35,47 @@ const ContactForm = () => {
     setIsSubmitting(true);
     setSubmitStatus(null);
 
+    const templateParams = {
+      title: `Contact Us: ${formData.name}`,
+      name: formData.name,
+      email: formData.email,
+      message: formData.message,
+      time: new Date().toLocaleString(),
+      to_email: "gsoni2092@gmail.com",
+      reply_to: formData.email,
+    };
+
     try {
-      // In a real app, you would send the form data to a backend API
-      // For this demo, we'll simulate a successful submission after a delay
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      
-      setSubmitStatus({
-        success: true,
-        message: 'Your message has been sent successfully!'
-      });
-      
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        message: ''
-      });
+      // Send email using EmailJS
+      const response = await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        templateParams,
+        EMAILJS_PUBLIC_KEY
+      );
+
+      if (response.status === 200) {
+        setSubmitStatus({
+          success: true,
+          message:
+            "Your message has been sent successfully! I will get back to you soon.",
+        });
+
+        // Reset form
+        setFormData({
+          name: "",
+          email: "",
+          message: "",
+        });
+      } else {
+        throw new Error("Failed to send message");
+      }
     } catch (error) {
+      console.error("Error sending email:", error);
       setSubmitStatus({
         success: false,
-        message: 'There was a problem sending your message. Please try again.'
+        message:
+          "There was a problem sending your message. Please try again or email me directly.",
       });
     } finally {
       setIsSubmitting(false);
@@ -55,22 +84,29 @@ const ContactForm = () => {
 
   return (
     <div className="card max-w-lg mx-auto">
-      <h3 className="text-2xl font-bold text-portfolio-lightestSlate mb-6">Get In Touch</h3>
-      
+      <h3 className="text-2xl font-bold text-portfolio-lightestSlate mb-6">
+        Get In Touch
+      </h3>
+
       {submitStatus && (
-        <div className={`p-4 mb-6 rounded-md ${
-          submitStatus.success 
-            ? 'bg-green-900/20 text-green-300 border border-green-500/30' 
-            : 'bg-red-900/20 text-red-300 border border-red-500/30'
-        }`}>
+        <div
+          className={`p-4 mb-6 rounded-md ${
+            submitStatus.success
+              ? "bg-green-900/20 text-green-300 border border-green-500/30"
+              : "bg-red-900/20 text-red-300 border border-red-500/30"
+          }`}
+        >
           {submitStatus.message}
         </div>
       )}
-      
-      <form onSubmit={handleSubmit} className="space-y-6">
+
+      <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
         {/* Name Field */}
         <div>
-          <label htmlFor="name" className="block text-portfolio-lightestSlate mb-2">
+          <label
+            htmlFor="name"
+            className="block text-portfolio-lightestSlate mb-2"
+          >
             <User size={16} className="inline mr-2" />
             Your Name
           </label>
@@ -82,13 +118,16 @@ const ContactForm = () => {
             onChange={handleChange}
             required
             className="w-full bg-portfolio-navy border border-portfolio-lightestNavy rounded-md p-3 text-portfolio-lightSlate focus:outline-none focus:ring-2 focus:ring-portfolio-cyan/50 focus:border-transparent"
-            placeholder="John Doe"
+            placeholder="Your Name"
           />
         </div>
-        
+
         {/* Email Field */}
         <div>
-          <label htmlFor="email" className="block text-portfolio-lightestSlate mb-2">
+          <label
+            htmlFor="email"
+            className="block text-portfolio-lightestSlate mb-2"
+          >
             <Mail size={16} className="inline mr-2" />
             Email Address
           </label>
@@ -100,13 +139,16 @@ const ContactForm = () => {
             onChange={handleChange}
             required
             className="w-full bg-portfolio-navy border border-portfolio-lightestNavy rounded-md p-3 text-portfolio-lightSlate focus:outline-none focus:ring-2 focus:ring-portfolio-cyan/50 focus:border-transparent"
-            placeholder="john@example.com"
+            placeholder="abc@example.com"
           />
         </div>
-        
+
         {/* Message Field */}
         <div>
-          <label htmlFor="message" className="block text-portfolio-lightestSlate mb-2">
+          <label
+            htmlFor="message"
+            className="block text-portfolio-lightestSlate mb-2"
+          >
             <MessageSquare size={16} className="inline mr-2" />
             Your Message
           </label>
@@ -121,7 +163,7 @@ const ContactForm = () => {
             placeholder="Hello, I'd like to discuss..."
           />
         </div>
-        
+
         {/* Submit Button */}
         <button
           type="submit"

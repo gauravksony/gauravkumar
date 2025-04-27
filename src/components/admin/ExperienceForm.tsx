@@ -1,10 +1,9 @@
-
-import { useState } from 'react';
-import { toast } from 'sonner';
-import { supabase } from '@/integrations/supabase/client';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import { useState } from "react";
+import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 interface ExperienceFormProps {
   onSuccess?: () => void;
@@ -16,20 +15,20 @@ interface ExperienceFormProps {
     start_date: string;
     end_date: string;
     description: string[];
-    type: 'work' | 'education';
+    type: "work" | "education";
   };
 }
 
 const ExperienceForm = ({ onSuccess, initialData }: ExperienceFormProps) => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    title: initialData?.title || '',
-    organization: initialData?.organization || '',
-    location: initialData?.location || '',
-    start_date: initialData?.start_date || '',
-    end_date: initialData?.end_date || '',
-    description: initialData?.description?.join('\n') || '',
-    type: initialData?.type || 'work'
+    title: initialData?.title || "",
+    organization: initialData?.organization || "",
+    location: initialData?.location || "",
+    start_date: initialData?.start_date || "",
+    end_date: initialData?.end_date || "",
+    description: initialData?.description?.join("\n") || "",
+    type: initialData?.type || "work",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -37,8 +36,8 @@ const ExperienceForm = ({ onSuccess, initialData }: ExperienceFormProps) => {
     try {
       setLoading(true);
       const description = formData.description
-        .split('\n')
-        .map(line => line.trim())
+        .split("\n")
+        .map((line) => line.trim())
         .filter(Boolean);
 
       const experienceData = {
@@ -47,25 +46,25 @@ const ExperienceForm = ({ onSuccess, initialData }: ExperienceFormProps) => {
         location: formData.location,
         start_date: formData.start_date,
         end_date: formData.end_date,
-        description: description.join('\n'), // Convert array to string with newlines
-        type: formData.type as 'work' | 'education'
+        description,
+        type: formData.type as "work" | "education",
       };
 
       const { error } = initialData?.id
         ? await supabase
-            .from('experiences')
+            .from("experiences")
             .update(experienceData)
-            .eq('id', initialData.id)
-        : await supabase
-            .from('experiences')
-            .insert(experienceData);
+            .eq("id", initialData.id)
+        : await supabase.from("experiences").insert(experienceData);
 
       if (error) throw error;
-      
-      toast.success(`Experience ${initialData ? 'updated' : 'created'} successfully`);
+
+      toast.success(
+        `Experience ${initialData ? "updated" : "created"} successfully`
+      );
       onSuccess?.();
     } catch (error: any) {
-      toast.error('Error saving experience: ' + error.message);
+      toast.error("Error saving experience: " + error.message);
     } finally {
       setLoading(false);
     }
@@ -77,7 +76,9 @@ const ExperienceForm = ({ onSuccess, initialData }: ExperienceFormProps) => {
         <label className="block text-sm font-medium mb-1">Title</label>
         <Input
           value={formData.title}
-          onChange={e => setFormData(prev => ({ ...prev, title: e.target.value }))}
+          onChange={(e) =>
+            setFormData((prev) => ({ ...prev, title: e.target.value }))
+          }
           required
         />
       </div>
@@ -86,7 +87,9 @@ const ExperienceForm = ({ onSuccess, initialData }: ExperienceFormProps) => {
         <label className="block text-sm font-medium mb-1">Organization</label>
         <Input
           value={formData.organization}
-          onChange={e => setFormData(prev => ({ ...prev, organization: e.target.value }))}
+          onChange={(e) =>
+            setFormData((prev) => ({ ...prev, organization: e.target.value }))
+          }
           required
         />
       </div>
@@ -95,7 +98,9 @@ const ExperienceForm = ({ onSuccess, initialData }: ExperienceFormProps) => {
         <label className="block text-sm font-medium mb-1">Location</label>
         <Input
           value={formData.location}
-          onChange={e => setFormData(prev => ({ ...prev, location: e.target.value }))}
+          onChange={(e) =>
+            setFormData((prev) => ({ ...prev, location: e.target.value }))
+          }
           required
         />
       </div>
@@ -105,7 +110,9 @@ const ExperienceForm = ({ onSuccess, initialData }: ExperienceFormProps) => {
           <label className="block text-sm font-medium mb-1">Start Date</label>
           <Input
             value={formData.start_date}
-            onChange={e => setFormData(prev => ({ ...prev, start_date: e.target.value }))}
+            onChange={(e) =>
+              setFormData((prev) => ({ ...prev, start_date: e.target.value }))
+            }
             required
             placeholder="e.g. Jan 2023"
           />
@@ -114,7 +121,9 @@ const ExperienceForm = ({ onSuccess, initialData }: ExperienceFormProps) => {
           <label className="block text-sm font-medium mb-1">End Date</label>
           <Input
             value={formData.end_date}
-            onChange={e => setFormData(prev => ({ ...prev, end_date: e.target.value }))}
+            onChange={(e) =>
+              setFormData((prev) => ({ ...prev, end_date: e.target.value }))
+            }
             required
             placeholder="e.g. Present"
           />
@@ -122,10 +131,14 @@ const ExperienceForm = ({ onSuccess, initialData }: ExperienceFormProps) => {
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1">Description (one point per line)</label>
+        <label className="block text-sm font-medium mb-1">
+          Description (one point per line)
+        </label>
         <Textarea
           value={formData.description}
-          onChange={e => setFormData(prev => ({ ...prev, description: e.target.value }))}
+          onChange={(e) =>
+            setFormData((prev) => ({ ...prev, description: e.target.value }))
+          }
           required
           rows={5}
           placeholder="• Led a team of 5 developers&#10;• Implemented new features&#10;• Improved performance by 50%"
@@ -136,7 +149,12 @@ const ExperienceForm = ({ onSuccess, initialData }: ExperienceFormProps) => {
         <label className="block text-sm font-medium mb-1">Type</label>
         <select
           value={formData.type}
-          onChange={e => setFormData(prev => ({ ...prev, type: e.target.value as 'work' | 'education' }))}
+          onChange={(e) =>
+            setFormData((prev) => ({
+              ...prev,
+              type: e.target.value as "work" | "education",
+            }))
+          }
           className="w-full px-3 py-2 bg-background border border-input rounded-md"
           required
         >
@@ -146,7 +164,11 @@ const ExperienceForm = ({ onSuccess, initialData }: ExperienceFormProps) => {
       </div>
 
       <Button type="submit" disabled={loading}>
-        {loading ? 'Saving...' : initialData ? 'Update Experience' : 'Create Experience'}
+        {loading
+          ? "Saving..."
+          : initialData
+          ? "Update Experience"
+          : "Create Experience"}
       </Button>
     </form>
   );

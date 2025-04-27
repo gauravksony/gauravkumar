@@ -1,6 +1,6 @@
-
-import { Link } from 'react-router-dom';
-import { Calendar } from 'lucide-react';
+import { Link } from "react-router-dom";
+import { Calendar } from "lucide-react";
+import { THUMBNAIL_DIMENSIONS } from "@/lib/imageUtils";
 
 export interface BlogCardProps {
   id: string;
@@ -19,21 +19,22 @@ const BlogCard: React.FC<BlogCardProps> = ({
   date,
   tags,
   featuredImage,
-  readTime = '5 min read'
+  readTime = "5 min read",
 }) => {
   return (
     <div className="card group h-full flex flex-col">
       {/* Blog Image */}
       {featuredImage && (
-        <div className="w-full h-48 overflow-hidden rounded-md mb-4">
-          <img 
-            src={featuredImage} 
-            alt={title} 
+        <div className="w-full aspect-video overflow-hidden rounded-md mb-4">
+          <img
+            src={featuredImage}
+            alt={title}
             className="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-500"
+            loading="lazy"
           />
         </div>
       )}
-      
+
       {/* Blog Meta */}
       <div className="flex items-center text-sm text-portfolio-slate mb-2">
         {date && (
@@ -42,13 +43,9 @@ const BlogCard: React.FC<BlogCardProps> = ({
             <span>{date}</span>
           </div>
         )}
-        {readTime && (
-          <div className="text-portfolio-slate">
-            {readTime}
-          </div>
-        )}
+        {readTime && <div className="text-portfolio-slate">{readTime}</div>}
       </div>
-      
+
       {/* Blog Content */}
       <div className="flex-grow">
         <Link to={`/blogs/${id}`}>
@@ -56,19 +53,21 @@ const BlogCard: React.FC<BlogCardProps> = ({
             {title}
           </h3>
         </Link>
-        
+
         <p className="text-portfolio-slate mb-4 line-clamp-3">{excerpt}</p>
-        
+
         {/* Tags */}
         <div className="mb-4">
           {tags.map((tag) => (
-            <span key={tag} className="tag">{tag}</span>
+            <span key={tag} className="tag">
+              {tag}
+            </span>
           ))}
         </div>
       </div>
-      
+
       {/* Read More Link */}
-      <Link 
+      <Link
         to={`/blogs/${id}`}
         className="text-portfolio-cyan font-medium hover:underline inline-flex"
       >

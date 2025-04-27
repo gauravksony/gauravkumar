@@ -1,14 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
 
 @layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
+    --portfolio-navy: #0a192f;
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -108,41 +111,65 @@
   .hero-heading {
     @apply text-4xl md:text-5xl lg:text-6xl font-bold text-portfolio-lightestSlate;
   }
-  
+
   .section-heading {
     @apply text-2xl md:text-3xl font-bold mb-6 text-portfolio-lightestSlate relative pb-2 inline-block;
   }
-  
+
   .section-heading::after {
-    content: '';
+    content: "";
     @apply absolute bottom-0 left-0 w-2/3 h-0.5 bg-portfolio-cyan;
   }
-  
+
   .btn-primary {
     @apply px-6 py-2 rounded-md bg-transparent text-portfolio-cyan border border-portfolio-cyan hover:bg-portfolio-cyan/10 transition-all duration-300 font-medium;
   }
-  
+
   .btn-secondary {
     @apply px-6 py-2 rounded-md bg-portfolio-cyan text-portfolio-navy border border-portfolio-cyan hover:bg-portfolio-cyan/90 transition-all duration-300 font-medium;
   }
-  
+
   .nav-link {
     @apply text-portfolio-lightSlate hover:text-portfolio-cyan transition-colors duration-200 px-2 py-1 relative;
   }
-  
+
   .nav-link::after {
-    content: '';
+    content: "";
     @apply absolute bottom-0 left-0 w-0 h-0.5 bg-portfolio-cyan transition-all duration-300;
   }
-  
+
   .nav-link:hover::after {
     @apply w-full;
   }
-  
+
+  /* Active nav link styles */
+  .active-nav-link {
+    @apply text-portfolio-cyan;
+  }
+
+  .active-nav-link::after {
+    @apply w-full;
+  }
+
+  /* Active nav link with bounce animation */
+  @keyframes bounce-underline {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-2px);
+    }
+  }
+
+  .active-nav-link::after {
+    animation: bounce-underline 2s ease-in-out infinite;
+  }
+
   .card {
     @apply bg-portfolio-lightNavy rounded-lg p-5 transition-all duration-300 border border-transparent hover:border-portfolio-cyan/30;
   }
-  
+
   .tag {
     @apply px-3 py-1 rounded-full text-xs bg-portfolio-lightestNavy text-portfolio-lightSlate inline-block mr-2 mb-2;
   }

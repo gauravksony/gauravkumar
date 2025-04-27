@@ -49,7 +49,7 @@ const Header = () => {
           to="/"
           className="text-portfolio-cyan font-mono text-xl font-bold"
         >
-          Portfolio<span className="text-portfolio-white">.</span>
+          gkdev<span className="text-portfolio-white">.</span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -82,7 +82,7 @@ const Header = () => {
             <Github size={20} />
           </a>
           <a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/in/gauravksony/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-portfolio-lightSlate hover:text-portfolio-cyan transition-colors"
@@ -90,7 +90,7 @@ const Header = () => {
             <Linkedin size={20} />
           </a>
           <a
-            href="https://youtube.com"
+            href="https://youtube.com/@gauravksony"
             target="_blank"
             rel="noopener noreferrer"
             className="text-portfolio-lightSlate hover:text-portfolio-cyan transition-colors"
@@ -98,7 +98,7 @@ const Header = () => {
             <Youtube size={20} />
           </a>
           <a
-            href="https://instagram.com"
+            href="https://instagram.com/gauravksony"
             target="_blank"
             rel="noopener noreferrer"
             className="text-portfolio-lightSlate hover:text-portfolio-cyan transition-colors"
@@ -147,7 +147,7 @@ const Header = () => {
                   <Github size={20} />
                 </a>
                 <a
-                  href="https://linkedin.com"
+                  href="https://linkedin.com/gauravksony"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-portfolio-lightSlate hover:text-portfolio-cyan transition-colors"
@@ -155,7 +155,7 @@ const Header = () => {
                   <Linkedin size={20} />
                 </a>
                 <a
-                  href="https://youtube.com"
+                  href="https://youtube.com/@gauravksony"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-portfolio-lightSlate hover:text-portfolio-cyan transition-colors"
@@ -163,7 +163,7 @@ const Header = () => {
                   <Youtube size={20} />
                 </a>
                 <a
-                  href="https://instagram.com"
+                  href="https://instagram.com/gauravksony"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-portfolio-lightSlate hover:text-portfolio-cyan transition-colors"

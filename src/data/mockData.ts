@@ -305,11 +305,11 @@ export const studyMaterialsData = [
 // Personal Info
 export const personalInfo = {
   name: "Gaurav Kumar",
-  title: "Software Engineer & Computer Science Educator",
+  title: "Aspiring Software Developer | Tech Enthusiast | Project Builder",
   email: "gauravkumar.byte@gmail.com",
   phone: "+91 7999617868",
   location: "India",
-  bio: "I am a passionate software engineer in the making with hands-on experience in full-stack development using React, Django, and SQL. I enjoy learning modern technologies, building real-world projects, and sharing my knowledge through blogs, educational content, and helping fellow students grow.",
+  bio: "a passionate developer and tech enthusiast who loves solving problems and building real-world projects.I come from a self-learning background where I constantly explore new technologies, frameworks, and tools. I have worked on multiple projects that show my ability to learn, adapt, and deliver solutions.I believe in the power of continuous learning, hard work, and smart work. My goal is to contribute to real-world tech solutions, grow as a professional, and make a positive impact through technology.",
   resumeUrl: "#",
   profileImage:
     "https://whnwzoxwuipgmwkqcops.supabase.co/storage/v1/object/public/project_images//1732425738630.jpg",

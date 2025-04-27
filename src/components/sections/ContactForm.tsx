@@ -118,7 +118,7 @@ const ContactForm = () => {
             onChange={handleChange}
             required
             className="w-full bg-portfolio-navy border border-portfolio-lightestNavy rounded-md p-3 text-portfolio-lightSlate focus:outline-none focus:ring-2 focus:ring-portfolio-cyan/50 focus:border-transparent"
-            placeholder="John Doe"
+            placeholder="Your Name"
           />
         </div>
 
@@ -139,7 +139,7 @@ const ContactForm = () => {
             onChange={handleChange}
             required
             className="w-full bg-portfolio-navy border border-portfolio-lightestNavy rounded-md p-3 text-portfolio-lightSlate focus:outline-none focus:ring-2 focus:ring-portfolio-cyan/50 focus:border-transparent"
-            placeholder="john@example.com"
+            placeholder="abc@example.com"
           />
         </div>
 

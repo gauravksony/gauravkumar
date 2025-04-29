@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Calendar, Clock } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { calculateReadTime } from "@/lib/textUtils";
 
 interface Blog {
   id: string;
@@ -11,6 +12,7 @@ interface Blog {
   tags: string[];
   featuredImage?: string;
   readTime?: string;
+  content: string;
 }
 
 interface RecommendedBlogsProps {
@@ -56,7 +58,7 @@ const RecommendedBlogs = ({
         date: new Date(blog.created_at).toLocaleDateString(),
         tags: blog.tags || [],
         featuredImage: blog.featured_image_url,
-        readTime: "5 min read", // Default read time
+        content: blog.content || "",
       }));
 
       setRecommendedBlogs(formattedBlogs);
@@ -94,14 +96,16 @@ const RecommendedBlogs = ({
             )}
 
             {/* Blog Meta */}
-            <div className="flex items-center text-sm text-portfolio-slate mb-2">
+            <div className="flex items-center text-sm mb-2">
               <div className="flex items-center mr-4">
                 <Calendar size={14} className="mr-1 text-portfolio-cyan" />
-                <span>{blog.date}</span>
+                <span className="text-portfolio-slate">{blog.date}</span>
               </div>
               <div className="flex items-center">
                 <Clock size={14} className="mr-1 text-portfolio-cyan" />
-                <span>{blog.readTime}</span>
+                <span className="text-portfolio-slate">
+                  {calculateReadTime(blog.content || blog.excerpt)}
+                </span>
               </div>
             </div>
 

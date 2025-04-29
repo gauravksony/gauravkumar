@@ -1,5 +1,11 @@
 import { Download, FileText, ExternalLink, Calendar } from "lucide-react";
 import { THUMBNAIL_DIMENSIONS } from "@/lib/imageUtils";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export type ResourceType = "pdf" | "video" | "link";
 
@@ -35,6 +41,19 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
     }
   };
 
+  const getTooltipText = () => {
+    switch (type) {
+      case "pdf":
+        return "PDF Document";
+      case "video":
+        return "Video Resource";
+      case "link":
+        return "External Link";
+      default:
+        return "Resource";
+    }
+  };
+
   return (
     <div className="card group h-full flex flex-col">
       {thumbnailUrl && (
@@ -52,8 +71,19 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
       )}
 
       <div className="flex items-center justify-between mb-4">
-        {/* Resource Type Icon */}
-        <div className="p-2 bg-portfolio-navy rounded-md">{getIcon()}</div>
+        {/* Resource Type Icon with Tooltip */}
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="p-2 bg-portfolio-navy rounded-md cursor-help">
+                {getIcon()}
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{getTooltipText()}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
 
         {/* Category Tag */}
         <span className="tag">{category}</span>

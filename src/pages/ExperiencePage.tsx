@@ -59,6 +59,8 @@ const ExperiencePage = () => {
             <a
               href={personalInfo.resumeUrl}
               className="btn-primary inline-flex mt-6"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <Download size={18} className="mr-2" />
               Download Resume

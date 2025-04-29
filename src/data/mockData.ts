@@ -309,13 +309,14 @@ export const personalInfo = {
   email: "gauravkumar.byte@gmail.com",
   phone: "+91 7999617868",
   location: "India",
-  bio: "a passionate developer and tech enthusiast who loves solving problems and building real-world projects.I come from a self-learning background where I constantly explore new technologies, frameworks, and tools. I have worked on multiple projects that show my ability to learn, adapt, and deliver solutions.I believe in the power of continuous learning, hard work, and smart work. My goal is to contribute to real-world tech solutions, grow as a professional, and make a positive impact through technology.",
-  resumeUrl: "#",
+  bio: "A passionate Developer and Tech Enthusiast who loves solving problems and building real-world projects. I come from a self-learning background where I constantly explore new technologies, frameworks, and tools. I have worked on multiple projects that show my ability to learn, adapt, and deliver solutions. I believe in the power of continuous learning, hard work, and smart work. My goal is to contribute to real-world tech solutions, grow as a professional, and make a positive impact through technology.",
+  resumeUrl:
+    "https://drive.usercontent.google.com/u/0/uc?id=1yP5CRs3-x3UISNFqpq83NGDCjwKP69yy&export=download",
   profileImage:
     "https://whnwzoxwuipgmwkqcops.supabase.co/storage/v1/object/public/project_images//1732425738630.jpg",
   socialLinks: {
     github: "https://github.com/gauravkumarsony",
-    linkedin: "https://linkedin.com/gauravksony",
+    linkedin: "https://linkedin.com/in/gauravksony",
     youtube: "https://youtube.com/@gauravksony",
     instagram: "https://instagram.com/gauravksony",
   },

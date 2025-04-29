@@ -60,10 +60,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             href={githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-portfolio-lightSlate hover:text-portfolio-cyan transition-colors flex items-center"
+            className="project-link code-link flex items-center relative overflow-hidden group/link"
+            aria-label={`View code for ${title}`}
           >
-            <Github size={18} className="mr-1" />
-            <span>Code</span>
+            <span className="project-link-icon-wrapper code-icon">
+              <Github size={18} className="project-link-icon" />
+            </span>
+            <span className="project-link-text">Code</span>
+            <span className="project-link-hover-effect"></span>
           </a>
         )}
 
@@ -72,10 +76,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             href={liveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-portfolio-lightSlate hover:text-portfolio-cyan transition-colors flex items-center"
+            className="project-link demo-link flex items-center relative overflow-hidden group/link"
+            aria-label={`View live demo for ${title}`}
           >
-            <ExternalLink size={18} className="mr-1" />
-            <span>Live Demo</span>
+            <span className="project-link-icon-wrapper demo-icon">
+              <ExternalLink size={18} className="project-link-icon" />
+            </span>
+            <span className="project-link-text">Live Demo</span>
+            <span className="project-link-hover-effect"></span>
           </a>
         )}
       </div>

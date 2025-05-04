@@ -22,6 +22,8 @@ import {
   setupContentAnimations,
   ensureContentVisible,
   reinitializeCardAnimations,
+  setupScrollAnimations,
+  setupLazyLoading,
 } from "./lib/animation";
 
 const queryClient = new QueryClient();
@@ -66,6 +68,24 @@ const App = () => {
         animationClass: "animate-fade-in-up",
       });
     }, 100); // Small delay to ensure content is visible first
+
+    // Initialize animations and smooth loading
+    setupScrollAnimations();
+    setupLazyLoading();
+
+    // Add animate-on-scroll class to elements that should animate
+    const animateElements = document.querySelectorAll(
+      ".card, .section-title, article, .project-card"
+    );
+    animateElements.forEach((element) => {
+      element.classList.add("animate-on-scroll");
+    });
+
+    // Add stagger animation to lists
+    const lists = document.querySelectorAll("ul, ol");
+    lists.forEach((list) => {
+      list.classList.add("stagger-list");
+    });
   }, []);
 
   return (

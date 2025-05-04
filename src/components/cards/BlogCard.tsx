@@ -25,47 +25,45 @@ const BlogCard: React.FC<BlogCardProps> = ({
   readTime,
   content,
 }) => {
-  // Calculate read time dynamically if content is available
+  const [imageLoaded, setImageLoaded] = useState(false);
   const [estimatedReadTime, setEstimatedReadTime] = useState(
     readTime || "5 min read"
   );
 
   useEffect(() => {
-    // First use the provided readTime if available (pre-calculated)
     if (readTime) {
       setEstimatedReadTime(readTime);
-    }
-    // Otherwise, if content is available, calculate read time from it
-    else if (content) {
-      // Make sure to clean the content from HTML tags for accurate word count
+    } else if (content) {
       setEstimatedReadTime(calculateReadTime(content));
-    }
-    // If no content but excerpt is available, calculate from excerpt
-    else if (excerpt) {
+    } else if (excerpt) {
       setEstimatedReadTime(calculateReadTime(excerpt));
-    }
-    // Otherwise use default
-    else {
-      setEstimatedReadTime("5 min read");
     }
   }, [content, excerpt, readTime]);
 
   return (
     <div className="card group h-full flex flex-col hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors duration-300 animate-on-scroll">
-      {/* Blog Image */}
+      {/* Blog Image with lazy loading */}
       {featuredImage && (
-        <div className="w-full aspect-video overflow-hidden rounded-md mb-4">
+        <div className="w-full aspect-video overflow-hidden rounded-md mb-4 relative">
+          <div
+            className={`absolute inset-0 bg-gray-200 dark:bg-gray-700 animate-pulse ${
+              imageLoaded ? "hidden" : "block"
+            }`}
+          />
           <img
-            src={featuredImage}
+            data-src={featuredImage}
             alt={title}
-            className="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-500"
+            className={`w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-500 lazy ${
+              imageLoaded ? "opacity-100" : "opacity-0"
+            }`}
             loading="lazy"
+            onLoad={() => setImageLoaded(true)}
           />
         </div>
       )}
 
-      {/* Blog Meta */}
-      <div className="flex items-center text-sm text-portfolio-slate mb-2">
+      {/* Blog Meta with stagger animation */}
+      <div className="flex items-center text-sm text-portfolio-slate mb-2 stagger-list">
         {date && (
           <div className="flex items-center mr-4">
             <Calendar size={14} className="mr-1" />
@@ -88,8 +86,8 @@ const BlogCard: React.FC<BlogCardProps> = ({
 
         <p className="text-portfolio-slate mb-4 line-clamp-3">{excerpt}</p>
 
-        {/* Tags */}
-        <div className="mb-4">
+        {/* Tags with stagger animation */}
+        <div className="mb-4 stagger-list">
           {tags.map((tag) => (
             <span key={tag} className="tag">
               {tag}
@@ -98,12 +96,26 @@ const BlogCard: React.FC<BlogCardProps> = ({
         </div>
       </div>
 
-      {/* Read More Link */}
+      {/* Read More Link with hover effect */}
       <Link
         to={`/blogs/${id}`}
-        className="text-portfolio-cyan font-medium hover:underline inline-flex"
+        className="text-portfolio-cyan font-medium hover:underline inline-flex items-center group"
       >
         Read More
+        <svg
+          className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform duration-200"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 5l7 7-7 7"
+          />
+        </svg>
       </Link>
     </div>
   );

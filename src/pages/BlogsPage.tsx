@@ -6,6 +6,7 @@ import { Search } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { calculateReadTime } from "@/lib/textUtils";
+import { initializeLazyLoading } from "@/lib/imageUtils";
 
 interface Blog {
   id: string;
@@ -65,6 +66,13 @@ const BlogsPage = () => {
   useEffect(() => {
     fetchBlogs();
   }, []);
+
+  useEffect(() => {
+    // Initialize lazy loading after blogs are loaded
+    if (!loading) {
+      initializeLazyLoading();
+    }
+  }, [loading, blogs]);
 
   // Helper function to convert JSON content to HTML - same as in BlogPost.tsx
   const processContent = (rawContent: string | object | null): string => {

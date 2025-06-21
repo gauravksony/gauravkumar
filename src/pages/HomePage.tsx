@@ -337,8 +337,8 @@ const HomePage = () => {
                     </div>
                     Programming & Web
                   </h4>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="tag shadow-sm hover:shadow-md transition-shadow hover:bg-modern-primary hover:text-white dark:hover:bg-blue-600">
+                  <div className="flex flex-wrap gap-2 text-black">
+                    <span className="tag shadow-sm hover:shadow-md transition-shadow hover:bg-modern-primary dark:text-black dark:hover:bg-blue-600">
                       C++
                     </span>
                     <span className="tag shadow-sm hover:shadow-md transition-shadow hover:bg-modern-primary hover:text-white dark:hover:bg-blue-600">

@@ -59,7 +59,7 @@ function ScrollToggleButton() {
 
   return (
     <div
-      className={`fixed bottom-5 right-5 flex flex-col items-center gap-2 z-30 transition-all duration-500 ${
+      className={`fixed bottom-5 right-5 flex flex-col items-center gap-2 z-10 transition-all duration-500 ${
         show
           ? "opacity-100 transform translate-y-0"
           : "opacity-0 pointer-events-none transform translate-y-10"

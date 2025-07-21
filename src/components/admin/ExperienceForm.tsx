@@ -46,7 +46,7 @@ const ExperienceForm = ({ onSuccess, initialData }: ExperienceFormProps) => {
         location: formData.location,
         start_date: formData.start_date,
         end_date: formData.end_date,
-        description,
+        description: JSON.stringify(description),
         type: formData.type as "work" | "education",
       };
 

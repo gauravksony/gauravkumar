@@ -56,7 +56,7 @@ export type Database = {
       experiences: {
         Row: {
           created_at: string
-          description: string
+          description: Json
           end_date: string
           id: string
           location: string
@@ -68,7 +68,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
-          description: string
+          description: Json
           end_date: string
           id?: string
           location: string
@@ -80,7 +80,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
-          description?: string
+          description?: Json
           end_date?: string
           id?: string
           location?: string

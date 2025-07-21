@@ -25,15 +25,12 @@ const ExperiencePage = () => {
       // Transform the data to ensure description is always an array
       const typedExperienceData = (data || []).map((item) => ({
         ...item,
-        // Parse the description field if it's a string, otherwise keep as is
-        description:
-          typeof item.description === "string"
-            ? item.description
-                .split("\n")
-                .filter((line) => line.trim().length > 0)
-            : Array.isArray(item.description)
-            ? item.description
-            : [],
+        // Parse the description field from JSON
+        description: Array.isArray(item.description) 
+          ? item.description 
+          : typeof item.description === "string"
+          ? JSON.parse(item.description)
+          : [],
         startDate: item.start_date,
         endDate: item.end_date,
         type: item.type as "work" | "education",

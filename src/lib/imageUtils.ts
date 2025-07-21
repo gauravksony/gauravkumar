@@ -100,6 +100,11 @@ export const THUMBNAIL_DIMENSIONS = {
     height: 675,
     aspectRatio: 16 / 9,
   },
+  studyMaterial: {
+    width: 1200,
+    height: 675,
+    aspectRatio: 16 / 9,
+  },
 };
 
 // Initialize lazy loading for images

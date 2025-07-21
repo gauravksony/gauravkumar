@@ -151,7 +151,7 @@ const BlogsPage = () => {
       if (error) throw error;
 
       // Transform the data to match the BlogCard component props
-      const formattedBlogs = data.map((blog: BlogApiResponse) => {
+      const formattedBlogs = data.map((blog: any) => {
         // Process content in the same way as in BlogPost.tsx
         const processedContent = processContent(blog.content);
 

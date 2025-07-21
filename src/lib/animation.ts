@@ -225,7 +225,7 @@ export function reinitializeCardAnimations(): void {
       el.classList.remove("fade-in-hidden");
 
       // Force a reflow to ensure animations can be reapplied
-      void el.offsetWidth;
+      void (el as HTMLElement).offsetWidth;
 
       // Apply the fade-in-hidden class to start fresh
       el.classList.add("fade-in-hidden");

@@ -58,7 +58,7 @@ const RecommendedBlogs = ({
         date: new Date(blog.created_at).toLocaleDateString(),
         tags: blog.tags || [],
         featuredImage: blog.featured_image_url,
-        content: blog.content || "",
+        content: typeof blog.content === 'string' ? blog.content : JSON.stringify(blog.content) || "",
       }));
 
       setRecommendedBlogs(formattedBlogs);

@@ -1,5 +1,7 @@
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useMemo } from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import { Button } from '@/components/ui/button';
 import { FileImage } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
@@ -14,6 +16,48 @@ interface RichTextEditorProps {
 const RichTextEditor = ({ value, onChange, bucket }: RichTextEditorProps) => {
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const quillRef = useRef<ReactQuill>(null);
+  
+  function handleImageButtonClick() {
+    fileInputRef.current?.click();
+  }
+  
+  // Quill modules configuration
+  const modules = useMemo(() => ({
+    toolbar: {
+      container: [
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+        [{ 'font': [] }],
+        [{ 'size': ['small', false, 'large', 'huge'] }],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ 'color': [] }, { 'background': [] }],
+        [{ 'script': 'sub'}, { 'script': 'super' }],
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        [{ 'indent': '-1'}, { 'indent': '+1' }],
+        [{ 'direction': 'rtl' }],
+        [{ 'align': [] }],
+        ['link', 'image', 'video'],
+        ['blockquote', 'code-block'],
+        ['clean']
+      ],
+      handlers: {
+        image: handleImageButtonClick
+      }
+    },
+    clipboard: {
+      matchVisual: false,
+    }
+  }), []);
+
+  const formats = [
+    'header', 'font', 'size',
+    'bold', 'italic', 'underline', 'strike', 'blockquote',
+    'list', 'bullet', 'indent',
+    'link', 'image', 'video',
+    'color', 'background',
+    'align', 'script',
+    'direction', 'code-block'
+  ];
   
   const handleInsertImage = async (file: File) => {
     try {
@@ -35,11 +79,14 @@ const RichTextEditor = ({ value, onChange, bucket }: RichTextEditorProps) => {
         .from(bucket)
         .getPublicUrl(fileName);
       
-      // Insert image tag at cursor position or at the end
-      const imageHtml = `\n<img src="${publicUrl}" alt="Content image" class="my-4 rounded-md max-w-full" />\n`;
-      
-      // Simple insertion at the end if we don't have more complex cursor handling
-      onChange(value + imageHtml);
+      // Insert image into Quill editor
+      const quill = quillRef.current?.getEditor();
+      if (quill) {
+        const range = quill.getSelection();
+        const index = range ? range.index : quill.getLength();
+        quill.insertEmbed(index, 'image', publicUrl);
+        quill.setSelection(index + 1, 0);
+      }
       
       toast.success('Image inserted successfully');
     } catch (error: any) {
@@ -49,9 +96,6 @@ const RichTextEditor = ({ value, onChange, bucket }: RichTextEditorProps) => {
     }
   };
   
-  const handleImageButtonClick = () => {
-    fileInputRef.current?.click();
-  };
   
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -82,16 +126,26 @@ const RichTextEditor = ({ value, onChange, bucket }: RichTextEditorProps) => {
         />
       </div>
       
-      <textarea
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="w-full min-h-[250px] p-3 bg-portfolio-navy border border-portfolio-lightestNavy rounded-b-md text-portfolio-lightSlate focus:outline-none focus:ring-2 focus:ring-portfolio-cyan/50 focus:border-transparent"
-        placeholder="Write your content here... You can add rich content like HTML tags and images."
-      />
+      <div className="rich-text-editor">
+        <ReactQuill
+          ref={quillRef}
+          theme="snow"
+          value={value}
+          onChange={onChange}
+          modules={modules}
+          formats={formats}
+          placeholder="Write your content here..."
+          style={{
+            backgroundColor: 'hsl(var(--portfolio-navy))',
+            color: 'hsl(var(--portfolio-lightSlate))',
+            minHeight: '250px',
+          }}
+        />
+      </div>
       
       <div className="text-sm text-portfolio-slate">
-        <p>To add images, click the "Insert Image" button above.</p>
-        <p>You can also use HTML tags for formatting: &lt;h1&gt;, &lt;p&gt;, &lt;ul&gt;, &lt;li&gt;, etc.</p>
+        <p>Use the toolbar above for rich formatting including bold, italic, headings, colors, and more.</p>
+        <p>You can also insert images using the image button in the toolbar or the button above.</p>
       </div>
     </div>
   );

@@ -76,28 +76,9 @@ const BlogsPage = () => {
 
   // Helper function to convert JSON content to HTML - same as in BlogPost.tsx
   const processContent = (rawContent: string | object | null): string => {
-    // If it's a string but might be JSON
-    if (
-      typeof rawContent === "string" &&
-      (rawContent.trim().startsWith("{") || rawContent.trim().startsWith("["))
-    ) {
-      try {
-        // Try to parse it as JSON
-        const parsedContent = JSON.parse(rawContent);
-        return convertJsonToHtml(parsedContent);
-      } catch (e) {
-        // If it fails, it's a plain string
-        return rawContent;
-      }
-    }
-
-    // If it's already an object
-    if (typeof rawContent === "object" && rawContent !== null) {
-      return convertJsonToHtml(rawContent as JsonContent);
-    }
-
-    // Default fallback
-    return typeof rawContent === "string" ? rawContent : "";
+    // Content is now stored as HTML text, so we can use it directly
+    if (!rawContent) return "";
+    return String(rawContent);
   };
 
   // Convert JSON content to HTML - simplified version of the one in BlogPost.tsx

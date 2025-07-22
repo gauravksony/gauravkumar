@@ -16,7 +16,7 @@ export type Database = {
     Tables: {
       blogs: {
         Row: {
-          content: Json | null
+          content: string | null
           created_at: string
           "example 1 column": string | null
           excerpt: string | null
@@ -28,7 +28,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
-          content?: Json | null
+          content?: string | null
           created_at?: string
           "example 1 column"?: string | null
           excerpt?: string | null
@@ -40,7 +40,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
-          content?: Json | null
+          content?: string | null
           created_at?: string
           "example 1 column"?: string | null
           excerpt?: string | null

@@ -134,34 +134,8 @@ const BlogPost = () => {
         return;
       }
 
-      // Process the blog content
-      let processedContent = "";
-
-      try {
-        // For JSONB content from Supabase
-        if (data.content && typeof data.content === "object") {
-          // Convert structured content to HTML
-          processedContent = convertJsonToHtml(data.content as JsonContent);
-        }
-        // For JSON string content
-        else if (
-          data.content &&
-          typeof data.content === "string" &&
-          (data.content.trim().startsWith("{") ||
-            data.content.trim().startsWith("["))
-        ) {
-          const parsedContent = JSON.parse(data.content);
-          processedContent = convertJsonToHtml(parsedContent);
-        }
-        // For plain HTML content
-        else if (data.content) {
-          processedContent = data.content as string;
-        }
-      } catch (err) {
-        console.error("Error processing blog content:", err);
-        // Fallback to using the content directly
-        processedContent = (data.content as string) || "";
-      }
+      // Since content is now stored as HTML text, we can use it directly
+      const processedContent = data.content || "";
 
       // Calculate read time based on content
       const estimatedReadTime = calculateReadTime(processedContent);

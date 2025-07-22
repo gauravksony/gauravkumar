@@ -3773,3 +3773,101 @@ h6 {
     background-position: 0% 50%;
   }
 }
+
+/* React Quill Editor Styles */
+.ql-toolbar {
+  border-top: 1px solid hsl(var(--portfolio-lightestNavy)) !important;
+  border-left: 1px solid hsl(var(--portfolio-lightestNavy)) !important;
+  border-right: 1px solid hsl(var(--portfolio-lightestNavy)) !important;
+  border-bottom: none !important;
+  background: hsl(var(--portfolio-lightestNavy)) !important;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.ql-container {
+  border-bottom: 1px solid hsl(var(--portfolio-lightestNavy)) !important;
+  border-left: 1px solid hsl(var(--portfolio-lightestNavy)) !important;
+  border-right: 1px solid hsl(var(--portfolio-lightestNavy)) !important;
+  border-top: none !important;
+  background: hsl(var(--portfolio-navy)) !important;
+  color: hsl(var(--portfolio-lightSlate)) !important;
+  min-height: 250px;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.ql-editor {
+  color: hsl(var(--portfolio-lightSlate)) !important;
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.ql-editor.ql-blank::before {
+  color: hsl(var(--portfolio-slate)) !important;
+  font-style: italic;
+}
+
+.ql-toolbar .ql-stroke {
+  stroke: hsl(var(--portfolio-lightSlate)) !important;
+}
+
+.ql-toolbar .ql-fill {
+  fill: hsl(var(--portfolio-lightSlate)) !important;
+}
+
+.ql-toolbar .ql-picker-label {
+  color: hsl(var(--portfolio-lightSlate)) !important;
+}
+
+.ql-toolbar button:hover,
+.ql-toolbar button:focus,
+.ql-toolbar button.ql-active,
+.ql-toolbar .ql-picker-label:hover,
+.ql-toolbar .ql-picker-label.ql-active {
+  color: hsl(var(--portfolio-cyan)) !important;
+}
+
+.ql-toolbar button:hover .ql-stroke,
+.ql-toolbar button:focus .ql-stroke,
+.ql-toolbar button.ql-active .ql-stroke,
+.ql-toolbar .ql-picker-label:hover .ql-stroke,
+.ql-toolbar .ql-picker-label.ql-active .ql-stroke {
+  stroke: hsl(var(--portfolio-cyan)) !important;
+}
+
+.ql-toolbar button:hover .ql-fill,
+.ql-toolbar button:focus .ql-fill,
+.ql-toolbar button.ql-active .ql-fill,
+.ql-toolbar .ql-picker-label:hover .ql-fill,
+.ql-toolbar .ql-picker-label.ql-active .ql-fill {
+  fill: hsl(var(--portfolio-cyan)) !important;
+}
+
+.ql-picker-options {
+  background: hsl(var(--portfolio-navy)) !important;
+  border: 1px solid hsl(var(--portfolio-lightestNavy)) !important;
+  border-radius: 6px;
+}
+
+.ql-picker-item {
+  color: hsl(var(--portfolio-lightSlate)) !important;
+}
+
+.ql-picker-item:hover {
+  color: hsl(var(--portfolio-cyan)) !important;
+  background: hsl(var(--portfolio-lightestNavy)) !important;
+}
+
+.ql-snow .ql-tooltip {
+  background: hsl(var(--portfolio-navy)) !important;
+  border: 1px solid hsl(var(--portfolio-lightestNavy)) !important;
+  color: hsl(var(--portfolio-lightSlate)) !important;
+}
+
+.ql-snow .ql-tooltip input[type=text] {
+  background: hsl(var(--portfolio-lightestNavy)) !important;
+  border: 1px solid hsl(var(--portfolio-slate)) !important;
+  color: hsl(var(--portfolio-lightSlate)) !important;
+}
